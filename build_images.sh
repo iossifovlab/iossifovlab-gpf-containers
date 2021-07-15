@@ -31,8 +31,8 @@ if [ "$3" ]; then
     export GPF_BRANCH=$3
     echo "GPF_BRANCH=${GPF_BRANCH}"
 else
-    echo 'GPF_BRANCH argument is empty; assuming release-3.4 branch'
     export GPF_BRANCH="release-3.5"
+    echo 'GPF_BRANCH argument is empty; assuming ${GPF_BRANCH} branch'
 fi
 
 
