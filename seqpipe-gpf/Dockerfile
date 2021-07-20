@@ -18,11 +18,14 @@ RUN apt-get update --fix-missing && \
 # RUN conda install -n gpf -c defaults -c conda-forge gunicorn mysqlclient
 # RUN conda install -n gpf -c defaults -c conda-forge -c anaconda mysql-connector-python
 
-ADD gpf/environment.yml /
-ADD gpf/dev-environment.yml /
+# ADD gpf/environment.yml /
+# ADD gpf/dev-environment.yml /
 
-RUN conda env create --name gpf --file /environment.yml
-RUN conda env update --name gpf --file /dev-environment.yml --prune
+# RUN conda env create --name gpf --file /environment.yml
+# RUN conda env update --name gpf --file /dev-environment.yml --prune
+
+ADD gpf/conda-environment.yml /
+RUN conda env create --name gpf --file /conda-environment.yml
 
 RUN conda install -n gpf -c defaults -c conda-forge gunicorn mysqlclient
 RUN conda install -n gpf -c defaults -c conda-forge -c anaconda mysql-connector-python
