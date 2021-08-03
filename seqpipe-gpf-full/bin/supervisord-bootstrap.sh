@@ -47,7 +47,7 @@ a2ensite localhost
 
 supervisorctl start apache2
 
-/wait-for-it.sh localhost:80 -t 240
+/wait-for-it.sh localhost:80 -t 360
 
 rc=$?
 if [ $rc -ne 0 ]; then
