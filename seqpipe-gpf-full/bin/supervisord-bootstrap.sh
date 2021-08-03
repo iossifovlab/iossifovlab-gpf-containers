@@ -12,7 +12,7 @@ done
 
 supervisorctl start gpf
 
-/wait-for-it.sh localhost:9001 -t 240
+/wait-for-it.sh localhost:9001 -t 420
 
 rc=$?
 if [ $rc -ne 0 ]; then
@@ -47,7 +47,7 @@ a2ensite localhost
 
 supervisorctl start apache2
 
-/wait-for-it.sh localhost:80 -t 360
+/wait-for-it.sh localhost:80 -t 120
 
 rc=$?
 if [ $rc -ne 0 ]; then
