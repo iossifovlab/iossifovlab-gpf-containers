@@ -1,4 +1,5 @@
-FROM :REGISTRY:/seqpipe-gpf:latest
+ARG BASE_IMAGE_TAG=latest
+FROM seqpipe-gpf:${BASE_IMAGE_TAG}
 
 
 SHELL ["/bin/bash", "-c"]
@@ -11,15 +12,14 @@ RUN apt-get update --fix-missing && \
 		apt-get clean
 
 
-ARG VERSION_TAG
 
-COPY gpfjs-dist-default-${VERSION_TAG}.tar.gz /
+COPY gpfjs-dist-default-local.tar.gz /
 
 RUN mkdir -p /logs
 RUN mkdir -p /site/gpf
 
 
-RUN tar zxvf /gpfjs-dist-default-${VERSION_TAG}.tar.gz -C /site/gpf
+RUN tar zxvf /gpfjs-dist-default-local.tar.gz -C /site/gpf
 
 WORKDIR /site
 
