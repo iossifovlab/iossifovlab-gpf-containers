@@ -58,12 +58,12 @@ function main() {
 
   build_stage "Build seqpipe-builder"
   {
-    build_docker_image_create "seqpipe-builder" "seqpipe-builder" "seqpipe-builder/Dockerfile"
+    build_docker_image_create "seqpipe-builder" "seqpipe-builder" "seqpipe-builder/Dockerfile" "latest"
   }
 
   build_stage "Build seqpipe-http"
   {
-    build_docker_image_create "seqpipe-http" "seqpipe-http" "seqpipe-http/Dockerfile"
+    build_docker_image_create "seqpipe-http" "seqpipe-http" "seqpipe-http/Dockerfile" "latest"
   }
 
   build_stage "Preparing gpf and gpfjs sources"
@@ -102,7 +102,9 @@ function main() {
 
   build_stage "Build seqpipe-gpf"
   {
-    build_docker_image_create "seqpipe-gpf" "seqpipe-gpf" "seqpipe-gpf/Dockerfile"
+    local docker_img_seqpipe_anaconda_base_tag
+    docker_img_seqpipe_anaconda_base_tag=$(e docker_img_seqpipe_anaconda_base_tag)
+    build_docker_image_create "seqpipe-gpf" "seqpipe-gpf" "seqpipe-gpf/Dockerfile" "$docker_img_seqpipe_anaconda_base_tag"
   }
 
   local seqpipe_node_base_image_ref
@@ -120,8 +122,8 @@ function main() {
     build_run python ppindex.py
 
     build_run cd dist/gpfjs
-    build_run tar zcvf /wd/seqpipe-gpfjs/gpfjs-dist-default-"${gpfjs_commit}".tar.gz .
-    build_run cp /wd/seqpipe-gpfjs/gpfjs-dist-default-"${gpfjs_commit}".tar.gz /wd/seqpipe-gpf-full/
+    build_run tar zcvf /wd/seqpipe-gpfjs/gpfjs-dist-default-local.tar.gz .
+    build_run cp /wd/seqpipe-gpfjs/gpfjs-dist-default-local.tar.gz /wd/seqpipe-gpf-full/
     build_run cd -
   }
 
@@ -135,16 +137,10 @@ function main() {
     local docker_repo
     docker_repo=$(ee docker_repo)
 
-    local seqpipe_gpf_image_ref
-    seqpipe_gpf_image_ref=$(e docker_img_seqpipe_gpf)
+    local docker_img_seqpipe_gpf_tag
+    docker_img_seqpipe_gpf_tag=$(e docker_img_seqpipe_gpf_tag)
 
-    # shellcheck disable=SC2016
-    build_run bash -c  "sed Dockerfile > Dockerfile.build \
-      -e '1 s|:REGISTRY:/seqpipe-gpf:latest|'${seqpipe_gpf_image_ref}'|g' \
-      -e 's/^ARG VERSION_TAG//' \
-      -e 's/\${VERSION_TAG}/'${gpfjs_commit}'/'"
-
-    build_docker_image_create "seqpipe-gpf-full" "seqpipe-gpf-full" ./seqpipe-gpf-full/Dockerfile.build
+    build_docker_image_create "seqpipe-gpf-full" "seqpipe-gpf-full" ./seqpipe-gpf-full/Dockerfile "${docker_img_seqpipe_gpf_tag}"
   }
 }
 
