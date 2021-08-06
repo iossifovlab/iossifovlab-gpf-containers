@@ -1,5 +1,6 @@
+ARG REGISTRY=""
 ARG BASE_IMAGE_TAG=latest
-FROM seqpipe-gpf:${BASE_IMAGE_TAG}
+FROM ${REGISTRY}seqpipe-gpf:${BASE_IMAGE_TAG}
 
 
 SHELL ["/bin/bash", "-c"]

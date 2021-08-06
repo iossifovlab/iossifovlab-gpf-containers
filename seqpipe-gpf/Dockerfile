@@ -1,5 +1,6 @@
+ARG REGISTRY=""
 ARG BASE_IMAGE_TAG=latest
-FROM seqpipe-anaconda-base:${BASE_IMAGE_TAG}
+FROM ${REGISTRY}seqpipe-anaconda-base:${BASE_IMAGE_TAG}
 
 RUN apt-get update --fix-missing && \
 	apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
