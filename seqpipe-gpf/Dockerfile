@@ -1,4 +1,4 @@
-FROM seqpipe/seqpipe-anaconda-base:latest
+FROM registry.seqpipe.org/seqpipe-anaconda-base:master_5ef70d4-124
 
 RUN apt-get update --fix-missing && \
 	apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
@@ -7,14 +7,12 @@ RUN apt-get update --fix-missing && \
 		mysql-client && \
 		apt-get clean
 
+ADD gpf/environment.yml /
+ADD gpf/dev-environment.yml /
 
-# RUN git clone https://github.com/iossifovlab/gpf.git
-COPY gpf/conda-environment.yml /
+RUN /opt/conda/bin/conda env create --name gpf --file /environment.yml
+RUN /opt/conda/bin/conda env update --name gpf --file /dev-environment.yml --prune
 
-RUN conda create \
-    -c defaults -c conda-forge -c iossifovlab -c bioconda \
-    -n gpf --file /conda-environment.yml
-    
 RUN conda install -n gpf -c defaults -c conda-forge gunicorn mysqlclient
 RUN conda install -n gpf -c defaults -c conda-forge -c anaconda mysql-connector-python
 RUN conda install -n gpf -c defaults -c conda-forge raven
