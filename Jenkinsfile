@@ -28,9 +28,15 @@ pipeline {
   }
   post {
     always {
-      zulipNotification(
-        topic: "${env.JOB_NAME}"
-      )
+      script {
+        try {
+          echo 'ok'
+        } finally {
+          zulipNotification(
+            topic: "${env.JOB_NAME}"
+          )
+        }
+      }
     }
   }
 }
