@@ -52,6 +52,10 @@ if os.environ.get("SENTRY_API_URL", None):
     }
 
 
+if os.environ.get("SECURE_HTTP", False):
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 
 DEBUG = os.environ.get("WDAE_DEBUG", "False") == "True"
 
