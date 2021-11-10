@@ -18,8 +18,7 @@ RUN conda env create --name gpf --file /environment.yml
 RUN conda env update --name gpf --file /dev-environment.yml --prune
 
 
-RUN conda install -n gpf -c defaults -c conda-forge gunicorn mysqlclient=2.0.3
-RUN conda install -n gpf -c defaults -c conda-forge -c anaconda mysql-connector-python=8.0.25
+RUN conda install -n gpf -c defaults -c conda-forge gunicorn=20.1.0 mysqlclient=2.0.3
 
 RUN conda update -n base -c defaults conda
 
