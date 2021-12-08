@@ -6,7 +6,7 @@ FROM ${REGISTRY}seqpipe-gpf:${BASE_IMAGE_TAG}
 SHELL ["/bin/bash", "-c"]
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
-	apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
 		supervisor less vim \
     	inetutils-ping net-tools apt-utils \
 		apache2 && \

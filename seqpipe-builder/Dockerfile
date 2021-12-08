@@ -3,7 +3,7 @@ FROM amd64/ubuntu:20.04
 SHELL ["/bin/bash", "-c"]
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
-	apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx apache2 sudo && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx apache2 sudo && \
 	apt-get clean
 
 RUN mkdir -p /root/.conda/

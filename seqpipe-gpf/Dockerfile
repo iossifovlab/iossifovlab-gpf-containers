@@ -3,7 +3,7 @@ ARG BASE_IMAGE_TAG=latest
 FROM ${REGISTRY}seqpipe-anaconda-base:${BASE_IMAGE_TAG}
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
-	apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
 		supervisor less vim \
     	inetutils-ping net-tools apt-utils \
 		mysql-client && \
