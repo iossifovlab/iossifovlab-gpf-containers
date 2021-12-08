@@ -1,8 +1,8 @@
-FROM amd64/ubuntu:18.04
+FROM amd64/ubuntu:20.04
 
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update --fix-missing && \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
 	apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
 		supervisor less vim \
     	inetutils-ping net-tools apt-utils \
