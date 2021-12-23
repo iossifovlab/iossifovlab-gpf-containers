@@ -46,105 +46,69 @@ function main() {
     build_run_ctx_init "container" "ubuntu:18.04"
     defer_ret build_run_ctx_reset
     build_run rm -rf \
-      ./seqpipe-gpfjs/gpfjs/node_modules \
-      ./seqpipe-gpfjs/gpfjs/package-lock.json \
-      ./seqpipe-gpfjs/gpfjs/dist \
-      ./seqpipe-gpfjs/gpfjs-dist-*.tar.gz \
-      ./seqpipe-gpf-full/gpfjs-dist-*.tar.gz
+      ./seqpipe-gpfjs/gpfjs
+    build_run rm -rf \
+      ./seqpipe-gpf/gpf
   }
 
-  local gpf_commit
-  gpf_commit=$(e gpf_git_describe)
+  local gpf_package_image
+  gpf_package_image=$(e docker_data_img_gpf_package)
 
-  local gpfjs_commit
-  gpfjs_commit=$(e gpfjs_git_describe)
-
-  build_stage "Build seqpipe-builder"
-  {
-    build_docker_image_create "seqpipe-builder" "seqpipe-builder" "seqpipe-builder/Dockerfile" "latest"
-  }
+  local gpfjs_package_image
+  gpfjs_package_image=$(e docker_data_img_gpfjs_package)
 
   build_stage "Build seqpipe-http"
   {
     build_docker_image_create "seqpipe-http" "seqpipe-http" "seqpipe-http/Dockerfile" "latest"
   }
 
-  build_stage "Preparing gpf and gpfjs sources"
-  {
-    build_run_ctx_init "local"
-    defer_ret build_run_ctx_reset
-
-    build_run pushd .
-
-    build_run cd seqpipe-gpf
-    build_run [ ! -d gpf ] && build_run git clone git@github.com:iossifovlab/gpf.git
-
-    build_run cd gpf
-    build_run git clean --force
-    build_run git checkout .
-    build_run git pull || true
-    build_run git checkout "$gpf_commit"
-    build_run git pull || true
-
-    build_run popd
-
-    build_run pushd .
-
-    build_run cd seqpipe-gpfjs
-    build_run [ ! -d gpfjs ] && build_run git clone git@github.com:iossifovlab/gpfjs.git
-
-    build_run cd gpfjs
-    build_run git clean --force
-    build_run git checkout .
-    build_run git pull  || true
-    build_run git checkout "$gpfjs_commit"
-    build_run git pull  || true
-
-    build_run popd
-  }
-
   build_stage "Build seqpipe-gpf"
   {
+    # copy gpf package
+    build_run_local mkdir -p ./seqpipe-gpf/gpf
+    build_docker_image_cp_from "$gpf_package_image" ./seqpipe-gpf/ /gpf
+
+
     local docker_img_seqpipe_anaconda_base_tag
     docker_img_seqpipe_anaconda_base_tag=$(e docker_img_seqpipe_anaconda_base_tag)
     build_docker_image_create "seqpipe-gpf" "seqpipe-gpf" "seqpipe-gpf/Dockerfile" "$docker_img_seqpipe_anaconda_base_tag"
   }
 
-  local seqpipe_node_base_image_ref
-  seqpipe_node_base_image_ref=$(e docker_img_seqpipe_node_base)
-  build_stage "Build seqpipe-gpfjs"
-  {
-    build_run_ctx_init "container" "$seqpipe_node_base_image_ref"
-    defer_ret build_run_ctx_reset
+  # local seqpipe_node_base_image_ref
+  # seqpipe_node_base_image_ref=$(e docker_img_seqpipe_node_base)
+  # build_stage "Build seqpipe-gpfjs"
+  # {
+  #   build_run_ctx_init "container" "$seqpipe_node_base_image_ref"
+  #   defer_ret build_run_ctx_reset
 
-    build_run cd seqpipe-gpfjs/gpfjs
+  #   build_run cd seqpipe-gpfjs/gpfjs
 
-    build_run npm install
-    build_run rm -rf dist
-    build_run ng build --prod --aot --configuration 'default' --base-href '/gpf_prefix/' --deploy-url '/gpf_prefix/'
-    build_run python ppindex.py
+  #   build_run npm install
+  #   build_run rm -rf dist
+  #   build_run ng build --prod --aot --configuration 'default' --base-href '/gpf_prefix/' --deploy-url '/gpf_prefix/'
+  #   build_run python ppindex.py
 
-    build_run cd dist/gpfjs
-    build_run tar zcvf /wd/seqpipe-gpfjs/gpfjs-dist-default-local.tar.gz .
-    build_run cp /wd/seqpipe-gpfjs/gpfjs-dist-default-local.tar.gz /wd/seqpipe-gpf-full/
-    build_run cd -
-  }
+  #   build_run cd dist/gpfjs
+  #   build_run tar zcvf /wd/seqpipe-gpfjs/gpfjs-dist-default-local.tar.gz .
+  #   build_run cp /wd/seqpipe-gpfjs/gpfjs-dist-default-local.tar.gz /wd/seqpipe-gpf-full/
+  #   build_run cd -
+  # }
 
-  build_stage "Build gpf-full"
-  {
-    build_run_ctx_init "local"
-    defer_ret build_run_ctx_reset
+  # build_stage "Build gpf-full"
+  # {
+  #   build_run_ctx_init "local"
+  #   defer_ret build_run_ctx_reset
 
-    build_run cd seqpipe-gpf-full
+  #   build_run cd seqpipe-gpf-full
 
-    local docker_repo
-    docker_repo=$(ee docker_repo)
+  #   local docker_repo
+  #   docker_repo=$(ee docker_repo)
 
-    local docker_img_seqpipe_gpf_tag
-    docker_img_seqpipe_gpf_tag=$(e docker_img_seqpipe_gpf_tag)
+  #   local docker_img_seqpipe_gpf_tag
+  #   docker_img_seqpipe_gpf_tag=$(e docker_img_seqpipe_gpf_tag)
 
-    build_docker_image_create "seqpipe-gpf-full" "seqpipe-gpf-full" ./seqpipe-gpf-full/Dockerfile "${docker_img_seqpipe_gpf_tag}"
-  }
+  #   build_docker_image_create "seqpipe-gpf-full" "seqpipe-gpf-full" ./seqpipe-gpf-full/Dockerfile "${docker_img_seqpipe_gpf_tag}"
+  # }
 }
 
 main "$@"
