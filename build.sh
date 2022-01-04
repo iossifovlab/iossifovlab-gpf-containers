@@ -33,7 +33,8 @@ function main() {
 
   libmain_init seqpipe.seqpipe-gpf-containers sgc
   libmain_init_build_env \
-    clobber:"$clobber" preset:"$preset" build_no:"$build_no" generate_jenkins_init:"$generate_jenkins_init" expose_ports:"$expose_ports" \
+    clobber:"$clobber" preset:"$preset" build_no:"$build_no" \
+    generate_jenkins_init:"$generate_jenkins_init" expose_ports:"$expose_ports" \
     iossifovlab.gpf iossifovlab.gpfjs
   libmain_save_build_env_on_exit
   libbuild_init stage:"$stage" registry.seqpipe.org
@@ -70,8 +71,9 @@ function main() {
 
 
     local docker_img_seqpipe_anaconda_base_tag
-    docker_img_seqpipe_anaconda_base_tag=$(e docker_img_seqpipe_anaconda_base_tag)
-    build_docker_image_create "seqpipe-gpf" "seqpipe-gpf" "seqpipe-gpf/Dockerfile" "$docker_img_seqpipe_anaconda_base_tag"
+    docker_img_seqpipe_miniconda_base_tag=$(e docker_img_seqpipe_miniconda_base_tag)
+    build_docker_image_create "seqpipe-gpf" "seqpipe-gpf" \
+      "seqpipe-gpf/Dockerfile" "$docker_img_seqpipe_miniconda_base_tag"
   }
 
   # local seqpipe_node_base_image_ref

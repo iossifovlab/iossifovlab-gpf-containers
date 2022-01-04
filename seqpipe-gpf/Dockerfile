@@ -1,10 +1,10 @@
 ARG REGISTRY=""
 ARG BASE_IMAGE_TAG=latest
-FROM ${REGISTRY}seqpipe-anaconda-base:${BASE_IMAGE_TAG}
+FROM ${REGISTRY}seqpipe-miniconda-base:${BASE_IMAGE_TAG}
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
-	DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && \
-	DEBIAN_FRONTEND=noninteractive apt-get clean
+# RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
+# 	DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && \
+# 	DEBIAN_FRONTEND=noninteractive apt-get clean
 
 	# DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
 	# 	supervisor less vim \
