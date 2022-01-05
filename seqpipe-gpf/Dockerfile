@@ -2,39 +2,21 @@ ARG REGISTRY=""
 ARG BASE_IMAGE_TAG=latest
 FROM ${REGISTRY}seqpipe-miniconda-base:${BASE_IMAGE_TAG}
 
-# RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
-# 	DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && \
-# 	DEBIAN_FRONTEND=noninteractive apt-get clean
-
-	# DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
-	# 	supervisor less vim \
-    # 	inetutils-ping net-tools apt-utils \
-	# 	mysql-client && \
-	# 	apt-get clean
-
-
-
-ADD gpf/environment.yml /
-# ADD gpf/dev-environment.yml /
-
-RUN mamba env create --name gpf --file /environment.yml
-# RUN conda env update --name gpf --file /dev-environment.yml --prune
-
-
-# RUN conda install -n gpf -c defaults -c conda-forge gunicorn=20.1.0 mysqlclient=2.0.3
-
-# RUN conda update -n base -c defaults conda
-
-
 RUN mkdir -p /code
 WORKDIR /code
 COPY gpf /code
 
-RUN cd /code/dae && /opt/conda/bin/conda run --no-capture-output -n gpf \
+RUN mamba env update --name base --file /code/environment.yml --prune
+
+
+
+RUN cd /code/dae && mamba run --no-capture-output -n base \
 	pip install .
 
-RUN cd /code/wdae && /opt/conda/bin/conda run --no-capture-output -n gpf \
+RUN cd /code/wdae && mamba run --no-capture-output -n base \
 	pip install .
+
+RUN mamba clean --all --force -y
 
 # # GPF ENV
 # ENV PATH /opt/conda/envs/gpf/bin:$PATH
@@ -44,6 +26,9 @@ RUN cd /code/wdae && /opt/conda/bin/conda run --no-capture-output -n gpf \
 # ENV HADOOP_HOME /opt/conda/envs/gpf
 # ENV HADOOP_CONF_DIR /opt/conda/envs/gpf/etc/hadoop
 
+# RUN conda install -n gpf -c defaults -c conda-forge gunicorn=20.1.0 mysqlclient=2.0.3
+
+# RUN conda update -n base -c defaults conda
 
 # WORKDIR /code/wdae
 

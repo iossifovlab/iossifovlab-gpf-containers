@@ -70,7 +70,7 @@ function main() {
     build_docker_image_cp_from "$gpf_package_image" ./seqpipe-gpf/ /gpf
 
 
-    local docker_img_seqpipe_anaconda_base_tag
+    local docker_img_seqpipe_miniconda_base_tag
     docker_img_seqpipe_miniconda_base_tag=$(e docker_img_seqpipe_miniconda_base_tag)
     build_docker_image_create "seqpipe-gpf" "seqpipe-gpf" \
       "seqpipe-gpf/Dockerfile" "$docker_img_seqpipe_miniconda_base_tag"
@@ -96,21 +96,28 @@ function main() {
   #   build_run cd -
   # }
 
-  # build_stage "Build gpf-full"
-  # {
-  #   build_run_ctx_init "local"
-  #   defer_ret build_run_ctx_reset
+  build_stage "Build gpf-full"
+  {
 
-  #   build_run cd seqpipe-gpf-full
+    # copy gpf package
+    build_run_local mkdir -p ./seqpipe-gpf-full/gpfjs
+    build_docker_image_cp_from "$gpfjs_package_image" ./seqpipe-gpf-full/ /gpfjs
 
-  #   local docker_repo
-  #   docker_repo=$(ee docker_repo)
 
-  #   local docker_img_seqpipe_gpf_tag
-  #   docker_img_seqpipe_gpf_tag=$(e docker_img_seqpipe_gpf_tag)
+    # build_run_ctx_init "local"
+    # defer_ret build_run_ctx_reset
 
-  #   build_docker_image_create "seqpipe-gpf-full" "seqpipe-gpf-full" ./seqpipe-gpf-full/Dockerfile "${docker_img_seqpipe_gpf_tag}"
-  # }
+    # build_run cd seqpipe-gpf-full
+
+    # local docker_repo
+    # docker_repo=$(ee docker_repo)
+
+    # local docker_img_seqpipe_gpf_tag
+    # docker_img_seqpipe_gpf_tag=$(e docker_img_seqpipe_gpf_tag)
+
+    # build_docker_image_create "seqpipe-gpf-full" "seqpipe-gpf-full" \
+    #   ./seqpipe-gpf-full/Dockerfile "${docker_img_seqpipe_gpf_tag}"
+  }
 }
 
 main "$@"
