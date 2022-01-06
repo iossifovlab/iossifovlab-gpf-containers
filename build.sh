@@ -104,19 +104,19 @@ function main() {
     build_docker_image_cp_from "$gpfjs_package_image" ./seqpipe-gpf-full/ /gpfjs
 
 
-    # build_run_ctx_init "local"
-    # defer_ret build_run_ctx_reset
+    build_run_ctx_init "local"
+    defer_ret build_run_ctx_reset
 
-    # build_run cd seqpipe-gpf-full
+    build_run cd seqpipe-gpf-full
 
-    # local docker_repo
-    # docker_repo=$(ee docker_repo)
+    local docker_repo
+    docker_repo=$(ee docker_repo)
 
-    # local docker_img_seqpipe_gpf_tag
-    # docker_img_seqpipe_gpf_tag=$(e docker_img_seqpipe_gpf_tag)
+    local docker_img_seqpipe_gpf_tag
+    docker_img_seqpipe_gpf_tag=$(e docker_img_seqpipe_gpf_tag)
 
-    # build_docker_image_create "seqpipe-gpf-full" "seqpipe-gpf-full" \
-    #   ./seqpipe-gpf-full/Dockerfile "${docker_img_seqpipe_gpf_tag}"
+    build_docker_image_create "seqpipe-gpf-full" "seqpipe-gpf-full" \
+      ./seqpipe-gpf-full/Dockerfile "${docker_img_seqpipe_gpf_tag}"
   }
 }
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-exec /opt/conda/envs/gpf/bin/gunicorn \
+exec /opt/conda/bin/gunicorn \
     --preload \
     --worker-class gthread \
     --workers=1 \
