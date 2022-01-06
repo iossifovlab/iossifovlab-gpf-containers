@@ -14,9 +14,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
 RUN mamba install -n base -c defaults -c conda-forge gunicorn=20.1.0 mysqlclient=2.0.3
 
 RUN mkdir -p /logs
-RUN mkdir -p /site/gpf
+RUN mkdir -p /site
 
-COPY gpfjs/* /site/gpf/
+COPY gpfjs /site/gpf
 
 
 WORKDIR /site
@@ -48,9 +48,9 @@ RUN cat /etc/hostname | awk '{print "ServerName "$1}' >> /etc/apache2/apache2.co
 
 RUN rm -f /etc/apache2/sites-enabled/000-default.conf
 
-ADD ./supervisor/supervisord.conf /etc/
-ADD ./bin/supervisord-bootstrap.sh /
-ADD ./bin/wait-for-it.sh /
+COPY ./supervisor/supervisord.conf /etc/
+COPY ./bin/supervisord-bootstrap.sh /
+COPY ./bin/wait-for-it.sh /
 RUN chmod +x /*.sh
 
 EXPOSE 80 443

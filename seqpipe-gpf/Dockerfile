@@ -2,13 +2,15 @@ ARG REGISTRY=""
 ARG BASE_IMAGE_TAG=latest
 FROM ${REGISTRY}seqpipe-miniconda-base:${BASE_IMAGE_TAG}
 
+COPY gpf/environment.yml /
+
+RUN mamba env update --name base --file /environment.yml --prune
+
+RUN mamba clean --all --force -y
+
 RUN mkdir -p /code
 WORKDIR /code
 COPY gpf /code
-
-RUN mamba env update --name base --file /code/environment.yml --prune
-
-
 
 RUN cd /code/dae && mamba run --no-capture-output -n base \
 	pip install .
@@ -16,7 +18,7 @@ RUN cd /code/dae && mamba run --no-capture-output -n base \
 RUN cd /code/wdae && mamba run --no-capture-output -n base \
 	pip install .
 
-RUN mamba clean --all --force -y
+
 
 # # GPF ENV
 # ENV PATH /opt/conda/envs/gpf/bin:$PATH
