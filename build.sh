@@ -79,7 +79,7 @@ function main() {
   build_stage "Build gpf-full"
   {
 
-    # copy gpf package
+    # copy gpfjs package
     build_run_local mkdir -p ./seqpipe-gpf-full/gpfjs
     build_docker_image_cp_from "$gpfjs_package_image" ./seqpipe-gpf-full/ /gpfjs
 
