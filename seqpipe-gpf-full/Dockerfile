@@ -11,8 +11,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
 		apache2 && \
 	DEBIAN_FRONTEND=noninteractive apt-get clean
 
-RUN mamba install -n base -c defaults -c conda-forge gunicorn=20.1.0 mysqlclient=2.0.3
-
 RUN mkdir -p /logs
 RUN mkdir -p /site
 
@@ -27,8 +25,7 @@ COPY ./wdae/gunicorn.wsgi /code/wdae/wdae/wdae/gunicorn_wsgi.py
 COPY ./wdae/settings.py /code/wdae/wdae/wdae/settings.py
 COPY ./wdae/gunicorn_settings.py /code/wdae/wdae/wdae/gunicorn_settings.py
 
-RUN cd /code/wdae && mamba run --no-capture-output -n base \
-	pip install .
+RUN source /gpf/bin/activate && cd /code/wdae/ && pip install .
 
 
 

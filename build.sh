@@ -44,7 +44,7 @@ function main() {
 
   build_stage "Cleanup"
   {
-    build_run_ctx_init "container" "ubuntu:18.04"
+    build_run_ctx_init "container" "ubuntu:20.04"
     defer_ret build_run_ctx_reset
     build_run rm -rf \
       ./seqpipe-gpfjs/gpfjs
@@ -75,26 +75,6 @@ function main() {
     build_docker_image_create "seqpipe-gpf" "seqpipe-gpf" \
       "seqpipe-gpf/Dockerfile" "$docker_img_seqpipe_miniconda_base_tag"
   }
-
-  # local seqpipe_node_base_image_ref
-  # seqpipe_node_base_image_ref=$(e docker_img_seqpipe_node_base)
-  # build_stage "Build seqpipe-gpfjs"
-  # {
-  #   build_run_ctx_init "container" "$seqpipe_node_base_image_ref"
-  #   defer_ret build_run_ctx_reset
-
-  #   build_run cd seqpipe-gpfjs/gpfjs
-
-  #   build_run npm install
-  #   build_run rm -rf dist
-  #   build_run ng build --prod --aot --configuration 'default' --base-href '/gpf_prefix/' --deploy-url '/gpf_prefix/'
-  #   build_run python ppindex.py
-
-  #   build_run cd dist/gpfjs
-  #   build_run tar zcvf /wd/seqpipe-gpfjs/gpfjs-dist-default-local.tar.gz .
-  #   build_run cp /wd/seqpipe-gpfjs/gpfjs-dist-default-local.tar.gz /wd/seqpipe-gpf-full/
-  #   build_run cd -
-  # }
 
   build_stage "Build gpf-full"
   {
