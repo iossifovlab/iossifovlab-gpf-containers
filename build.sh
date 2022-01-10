@@ -70,10 +70,8 @@ function main() {
     build_docker_image_cp_from "$gpf_package_image" ./seqpipe-gpf/ /gpf
 
 
-    local docker_img_seqpipe_miniconda_base_tag
-    docker_img_seqpipe_miniconda_base_tag=$(e docker_img_seqpipe_miniconda_base_tag)
     build_docker_image_create "seqpipe-gpf" "seqpipe-gpf" \
-      "seqpipe-gpf/Dockerfile" "$docker_img_seqpipe_miniconda_base_tag"
+      "seqpipe-gpf/Dockerfile" "no_tag"
   }
 
   build_stage "Build gpf-full"
