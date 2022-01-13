@@ -6,24 +6,30 @@ FROM ${REGISTRY}seqpipe-gpf:${BASE_IMAGE_TAG}
 SHELL ["/bin/bash", "-c"]
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential gcc vim wget curl git libgl1-mesa-glx \
-		supervisor less vim \
-    	inetutils-ping net-tools apt-utils \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y \
+		supervisor less \
 		apache2 && \
-		apt-get clean
-
-
-
-COPY gpfjs-dist-default-local.tar.gz /
+	DEBIAN_FRONTEND=noninteractive apt-get clean
 
 RUN mkdir -p /logs
-RUN mkdir -p /site/gpf
+RUN mkdir -p /site
 
+COPY gpfjs /site/gpf
 
-RUN tar zxvf /gpfjs-dist-default-local.tar.gz -C /site/gpf
 
 WORKDIR /site
 
+# configure wdae
+COPY ./wdae/wdae.wsgi /code/wdae/wdae/wdae/wsgi.py
+COPY ./wdae/gunicorn.wsgi /code/wdae/wdae/wdae/gunicorn_wsgi.py
+COPY ./wdae/settings.py /code/wdae/wdae/wdae/settings.py
+COPY ./wdae/gunicorn_settings.py /code/wdae/wdae/wdae/gunicorn_settings.py
+
+RUN source /gpf/bin/activate && cd /code/wdae/ && pip install .
+
+
+
+# configure apache2
 RUN mkdir -p /var/run/apache2
 
 ENV APACHE_LOG_DIR=/var/log/apache2
@@ -39,9 +45,9 @@ RUN cat /etc/hostname | awk '{print "ServerName "$1}' >> /etc/apache2/apache2.co
 
 RUN rm -f /etc/apache2/sites-enabled/000-default.conf
 
-ADD ./supervisor/supervisord.conf /etc/
-ADD ./bin/supervisord-bootstrap.sh /
-ADD ./bin/wait-for-it.sh /
+COPY ./supervisor/supervisord.conf /etc/
+COPY ./bin/supervisord-bootstrap.sh /
+COPY ./bin/wait-for-it.sh /
 RUN chmod +x /*.sh
 
 EXPOSE 80 443

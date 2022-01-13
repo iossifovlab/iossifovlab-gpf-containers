@@ -8,7 +8,9 @@ for impala_host in ${IMPALA_HOSTS}; do
     echo "done..."
 done
 
-/code/wdae/wdae/wdaemanage.py migrate
+source /gpf/bin/activate
+
+wdaemanage.py migrate
 
 supervisorctl start gpf
 
