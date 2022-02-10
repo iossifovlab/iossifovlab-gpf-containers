@@ -35,6 +35,9 @@ COPY --from=build /code /code
 # When image is run, run the code with the environment
 # activated:
 RUN echo "source /gpf/bin/activate" >> /etc/bash.bashrc
+# Explicitly add gpf/bin to the path to aid certain tools (like dask)
+# in finding the needed executables
+ENV PATH /gpf/bin:$PATH
 
 SHELL ["/bin/bash", "-c"]
 
