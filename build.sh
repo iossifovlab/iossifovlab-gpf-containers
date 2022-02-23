@@ -92,7 +92,7 @@ function main() {
     docker_img_iossifovlab_gpf_tag=$(e docker_img_iossifovlab_gpf_tag)
 
     build_docker_image_create "iossifovlab-gpf-full" "iossifovlab-gpf-full" \
-      ./seqpipe-gpf-full/Dockerfile "${docker_img_iossifovlab_gpf_tag}"
+      ./iossifovlab-gpf-full/Dockerfile "${docker_img_iossifovlab_gpf_tag}"
   }
 }
 
