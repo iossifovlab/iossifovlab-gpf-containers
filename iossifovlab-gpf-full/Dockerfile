@@ -1,6 +1,6 @@
 ARG REGISTRY=""
 ARG BASE_IMAGE_TAG=latest
-FROM ${REGISTRY}seqpipe-gpf:${BASE_IMAGE_TAG}
+FROM ${REGISTRY}iossifovlab-gpf:${BASE_IMAGE_TAG}
 
 
 SHELL ["/bin/bash", "-c"]
