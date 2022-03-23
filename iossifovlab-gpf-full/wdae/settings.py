@@ -1,35 +1,6 @@
+# flake8: noqa
 import os
-from .default_settings import *
-
-# INSTALLED_APPS += [
-#     "rest_framework",
-#     "rest_framework.authtoken",
-#     "guardian",
-#     "django.contrib.admin",
-#     "django.contrib.messages",
-#     "django.contrib.auth",
-#     "django.contrib.contenttypes",
-#     "django.contrib.staticfiles",
-#     "django.contrib.sessions",
-#     "utils",
-#     "gpf_instance",
-#     "gene_weights",
-#     "gene_sets",
-#     "datasets_api",
-#     "genotype_browser",
-#     "enrichment_api",
-#     "measures_api",
-#     "family_counters_api",
-#     "pheno_browser_api",
-#     "common_reports_api",
-#     "pheno_tool_api",
-#     "users_api",
-#     "groups_api",
-#     # 'gpfjs',
-#     "chromosome",
-#     "query_state_save",
-#     "user_queries",
-# ]
+from .default_settings import *  # type: ignore  NOSONAR
 
 
 SECRET_KEY = os.environ.get("WDAE_SECRET_KEY")
