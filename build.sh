@@ -58,7 +58,11 @@ function main() {
 
   build_stage "Build iossifovlab-http"
   {
-    build_docker_image_create "iossifovlab-http" "iossifovlab-http" "iossifovlab-http/Dockerfile" "latest"
+    local docker_img_iossifovlab_gpf_tag
+    docker_img_iossifovlab_gpf_tag=$(e docker_img_iossifovlab_gpf_tag)
+
+    build_docker_image_create "iossifovlab-http" "iossifovlab-http" \
+      "iossifovlab-http/Dockerfile" "${docker_img_iossifovlab_gpf_tag}" "seqpipe"
   }
 
   build_stage "Build iossifovlab-gpf"
@@ -67,9 +71,11 @@ function main() {
     build_run_local mkdir -p ./iossifovlab-gpf/gpf
     build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf/ /gpf
 
+    local docker_img_iossifovlab_gpf_tag
+    docker_img_iossifovlab_gpf_tag=$(e docker_img_iossifovlab_gpf_tag)
 
     build_docker_image_create "iossifovlab-gpf" "iossifovlab-gpf" \
-      "iossifovlab-gpf/Dockerfile" "no_tag"
+      "iossifovlab-gpf/Dockerfile" "${docker_img_iossifovlab_gpf_tag}" "seqpipe"
   }
 
   build_stage "Build gpf-full"
@@ -92,7 +98,7 @@ function main() {
     docker_img_iossifovlab_gpf_tag=$(e docker_img_iossifovlab_gpf_tag)
 
     build_docker_image_create "iossifovlab-gpf-full" "iossifovlab-gpf-full" \
-      ./iossifovlab-gpf-full/Dockerfile "${docker_img_iossifovlab_gpf_tag}"
+      ./iossifovlab-gpf-full/Dockerfile "${docker_img_iossifovlab_gpf_tag}" "seqpipe"
   }
 }
 
