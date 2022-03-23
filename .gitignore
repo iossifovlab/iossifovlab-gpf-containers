@@ -1,11 +1,7 @@
 data-hg19
 data-hg19-startup
 temp
-seqpipe-gpf/gpf/
-seqpipe-gpfjs/gpfjs/
-seqpipe-gpfjs/gpfjs-dist-*.tar.gz
-seqpipe-gpf-full/gpfjs-dist-*.tar.gz
-seqpipe-gpf-full/gpfjs
-
-seqpipe-gpf-full/Dockerfile.build
 /build-env/*.sh
+iossifovlab-gpf-full/gpfjs/
+iossifovlab-gpf/gpf/
+
