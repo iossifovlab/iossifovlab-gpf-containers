@@ -60,7 +60,7 @@ function main() {
   gpf_tag=$(e gpf_git_describe)
 
   local public_image_tag
-  public_image_tag="$gpf_tag-$build-no"
+  public_image_tag="$gpf_tag-$build_no"
 
   build_stage "Build iossifovlab-http"
   {
