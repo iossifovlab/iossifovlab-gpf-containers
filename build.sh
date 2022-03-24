@@ -59,9 +59,6 @@ function main() {
   local gpf_tag
   gpf_tag=$(e gpf_git_describe)
 
-  local build_no
-  build_no="$(ee_metadata "build_no")"
-
   local public_image_tag
   public_image_tag="$gpf_tag-$build-no"
 
