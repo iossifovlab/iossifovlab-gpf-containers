@@ -56,10 +56,21 @@ function main() {
   local gpfjs_package_image
   gpfjs_package_image=$(e docker_data_img_gpfjs_package)
 
+  local gpf_tag
+  gpf_tag=$(e gpf_git_describe)
+
+  local build_no
+  build_no="$(ee_metadata "build_no")"
+
+  local public_image_tag
+  public_image_tag="$gpf_tag-$build-no"
+
   build_stage "Build iossifovlab-http"
   {
     build_docker_image_create "iossifovlab-http" "iossifovlab-http" \
       "iossifovlab-http/Dockerfile" "latest" "iossifovlab"
+
+    build_docker_image_push "iossifovlab-http" "iossifovlab/iossifovlab-http:$public_image_tag"
   }
 
   build_stage "Build iossifovlab-gpf"
@@ -69,7 +80,9 @@ function main() {
     build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf/ /gpf
 
     build_docker_image_create "iossifovlab-gpf" "iossifovlab-gpf" \
-      "iossifovlab-gpf/Dockerfile" "no_tag" "iossifovlab"
+      "iossifovlab-gpf/Dockerfile" "no_tag"
+    
+    build_docker_image_push "iossifovlab-gpf" "iossifovlab/iossifovlab-gpf:$public_image_tag"
   }
 
   build_stage "Build gpf-full"
@@ -89,6 +102,8 @@ function main() {
 
     build_docker_image_create "iossifovlab-gpf-full" "iossifovlab-gpf-full" \
       ./iossifovlab-gpf-full/Dockerfile "${docker_img_iossifovlab_gpf_tag}" "iossifovlab"
+
+    build_docker_image_push "iossifovlab-gpf-full" "iossifovlab/iossifovlab-gpf-full:$public_image_tag"
   }
 }
 
