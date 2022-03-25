@@ -41,6 +41,9 @@ sed -i "s/gpf_prefix/${GPF_PREFIX}/g" /etc/apache2/sites-available/localhost.con
 
 fi
 
+if [[ ! -z "${DAE_PHENODB_DIR}" ]]; then
+sed -i "s;/data-phenodb;$DAE_PHENODB_DIR;g" /etc/apache2/sites-available/localhost.conf
+fi
 
 a2enmod headers
 
