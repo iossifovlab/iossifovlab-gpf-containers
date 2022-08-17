@@ -58,8 +58,17 @@ function main() {
 
   build_stage "Build iossifovlab-http"
   {
-    build_docker_image_create "iossifovlab-http" "iossifovlab-http" "iossifovlab-http/Dockerfile" "latest"
+    build_docker_image_create \
+      "iossifovlab-http" \
+      "iossifovlab-http" \
+      "iossifovlab-http/Dockerfile" \
+      "latest"
   }
+
+  local docker_img_iossifovlab_miniconda_base_tag
+  docker_img_iossifovlab_miniconda_base_tag="$(e docker_img_iossifovlab_miniconda_base_tag)"
+
+  echo "docker_img_iossifovlab_miniconda_base_tag=$docker_img_iossifovlab_miniconda_base_tag"
 
   build_stage "Build iossifovlab-gpf"
   {
@@ -68,8 +77,11 @@ function main() {
     build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf/ /gpf
 
 
-    build_docker_image_create "iossifovlab-gpf" "iossifovlab-gpf" \
-      "iossifovlab-gpf/Dockerfile" "no_tag"
+    build_docker_image_create \
+      "iossifovlab-gpf" \
+      "iossifovlab-gpf" \
+      "iossifovlab-gpf/Dockerfile" \
+      "$docker_img_iossifovlab_miniconda_base_tag"
   }
 
   build_stage "Build gpf-full"

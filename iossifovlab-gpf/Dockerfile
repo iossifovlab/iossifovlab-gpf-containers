@@ -1,5 +1,9 @@
 # The build-stage image:
-FROM continuumio/miniconda3 AS build
+ARG REGISTRY=""
+ARG BASE_IMAGE_TAG=latest
+FROM ${REGISTRY}iossifovlab-miniconda-base:${BASE_IMAGE_TAG} AS build
+
+# FROM continuumio/miniconda3 AS build
 
 RUN conda install -y -c conda-forge conda-pack mamba
 
