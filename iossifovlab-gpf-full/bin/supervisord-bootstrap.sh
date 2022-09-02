@@ -46,7 +46,8 @@ sed -i "s;/data-phenodb;$DAE_PHENODB_DIR;g" /etc/apache2/sites-available/localho
 fi
 
 if [ "${DOCKER_COMPOSE_CORS_WORKAROUND}" == "True" ]; then
-sed -i '/^<VirtualHost \*:80>$/ a\ \ \ \ Header always set Access-Control-Allow-Origin *' /etc/apache2/sites-available/localhost.conf
+sed -i '/^<VirtualHost \*:80>$/ a\ \ \ \ Header always set Access-Control-Allow-Origin http://localhost:8080\n    Header always set Access-Control-Allow-Credentials true\n    Header always set Access-Control-Allow-Headers "content-type, authorization"' /etc/apache2/sites-available/localhost.conf
+    
 fi
 
 a2enmod headers
