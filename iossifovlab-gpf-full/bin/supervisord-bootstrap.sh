@@ -45,7 +45,7 @@ if [[ ! -z "${DAE_PHENODB_DIR}" ]]; then
 sed -i "s;/data-phenodb;$DAE_PHENODB_DIR;g" /etc/apache2/sites-available/localhost.conf
 fi
 
-if [ "${DOCKER_COMPOSE_CORS_WORKAROUND}" == "true" ]; then
+if [ "${DOCKER_COMPOSE_CORS_WORKAROUND}" == "True" ]; then
 sed -i '/^<VirtualHost \*:80>$/ a\ \ \ \ Header always set Access-Control-Allow-Origin *' /etc/apache2/sites-available/localhost.conf
 fi
 
