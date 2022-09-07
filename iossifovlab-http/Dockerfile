@@ -29,6 +29,7 @@ RUN rm /etc/apache2/sites-enabled/000-default.conf
 
 ADD ./supervisor/supervisord.conf /etc/
 ADD ./bin/supervisord-bootstrap.sh /
+ADD ./bin/supervisord-bootstrap.sh.d /supervisord-bootstrap.sh.d/
 ADD ./bin/wait-for-it.sh /
 RUN chmod +x /*.sh
 

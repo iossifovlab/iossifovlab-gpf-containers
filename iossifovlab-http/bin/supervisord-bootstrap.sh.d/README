@@ -1,0 +1,4 @@
+Files in this dir ending in .sh will be executed as part of supervisord-bootstrap.sh, sorted by name.
+
+To disable a script from running a file with .disabled can be put here to skip its execution
+i.e. 00-default.sh.disabled
