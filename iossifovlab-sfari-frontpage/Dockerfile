@@ -27,6 +27,7 @@ ENV APACHE_RUN_USER=www-data
 ENV APACHE_PID_FILE=/var/run/apache2/apache2.pid
 
 COPY ./sites-available/localhost.conf /etc/apache2/sites-available/
+ADD ./supervisord-bootstrap.sh.d/ /supervisord-bootstrap.sh.d/
 
 RUN cat /etc/hostname | awk '{print "ServerName "$1}' >> /etc/apache2/apache2.conf
 
