@@ -124,8 +124,11 @@ function main() {
     local docker_repo
     docker_repo=$(ee docker_repo)
 
+    local docker_img_iossifovlab_http_tag
+    docker_img_iossifovlab_http_tag=$(e docker_img_iossifovlab_http_tag)
+
     build_docker_image_create "iossifovlab-sfari-frontpage" "iossifovlab-sfari-frontpage" \
-      ./iossifovlab-sfari-frontpage/Dockerfile "latest"
+      ./iossifovlab-sfari-frontpage/Dockerfile "$docker_img_iossifovlab_http_tag"
   }
 }
 
