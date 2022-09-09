@@ -7,8 +7,9 @@ echo "$0: replacing placeholder environment object with a production environment
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 cd "$dir"
 
-# the script expects a gpf oauth instance and at least one gpf instance to be defined as follows
+# the script expects a frontpage prefix, a gpf oauth instance and at least one gpf instance to be defined as follows
 
+#GPF_FRONTPAGE_INSTANCE_PREFIX=frontpage_prefix
 #GPF_OAUTH_ENDPOINT=localhost:9000
 #GPF_OAUTH_PREFIX=gpf_prefix
 #GPF_INSTANCES_1_ENDPOINT=localhost:9000
@@ -22,6 +23,7 @@ cd "$dir"
 # ...
 
 
+declare -p GPF_FRONTPAGE_INSTANCE_PREFIX &> /dev/null || (echo "gpf frontpage prefix: missing prefix"; exit 1)
 declare -p GPF_OAUTH_ENDPOINT &> /dev/null || (echo "gpf oauth instance: at least one declared oauth instance is required"; exit 1)
 declare -p GPF_OAUTH_PREFIX &> /dev/null  || (echo "gpf oauth instance: missing prefix"; exit 1)
 declare -p GPF_INSTANCES_1_ENDPOINT &> /dev/null || (echo "gpf instances: at least one declared instance is required"; exit 1)
@@ -115,6 +117,12 @@ production_environment_object+=''\
 #
 
 sed -i -e 's|'"$placeholder_environment_object"'|'"$production_environment_object"'|' /site/frontpage/main.*.js
+
+#
+# replace the base href in index.html
+#
+
+sed -i -e 's|<base href="">|<base href="/'"$GPF_FRONTPAGE_INSTANCE_PREFIX"'/">|' /site/frontpage/index.html
 
 a2ensite localhost
 
