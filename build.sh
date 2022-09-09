@@ -81,7 +81,6 @@ function main() {
     build_run_local mkdir ./iossifovlab-gpf/gpf
     build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf/ /gpf
 
-
     build_docker_image_create \
       "iossifovlab-gpf" \
       "iossifovlab-gpf" \
@@ -96,12 +95,6 @@ function main() {
     build_run_local mkdir ./iossifovlab-gpf-full/gpfjs
     build_docker_image_cp_from "$gpfjs_package_image" ./iossifovlab-gpf-full/ /gpfjs
 
-
-    build_run_ctx_init "local"
-    defer_ret build_run_ctx_reset
-
-    build_run cd iossifovlab-gpf-full
-
     local docker_repo
     docker_repo=$(ee docker_repo)
 
@@ -110,6 +103,8 @@ function main() {
 
     build_docker_image_create "iossifovlab-gpf-full" "iossifovlab-gpf-full" \
       ./iossifovlab-gpf-full/Dockerfile "${docker_img_iossifovlab_gpf_tag}"
+
+
   }
 
   build_stage "Build sfari-frontpage"
@@ -117,11 +112,6 @@ function main() {
     # copy sfari-frontpage package
     build_run_local mkdir ./iossifovlab-sfari-frontpage/sfari-frontpage
     build_docker_image_cp_from "$sfari_frontpage_package_image" ./iossifovlab-sfari-frontpage/ /sfari-frontpage
-
-    build_run_ctx_init "local"
-    defer_ret build_run_ctx_reset
-
-    build_run cd iossifovlab-sfari-frontpage
 
     local docker_repo
     docker_repo=$(ee docker_repo)
