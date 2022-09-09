@@ -47,7 +47,9 @@ function main() {
     build_run_ctx_init "container" "ubuntu:20.04"
     defer_ret build_run_ctx_reset
     build_run rm -rf \
-      ./iossifovlab-gpf/gpf
+      ./iossifovlab-gpf/gpf \
+      ./iossifovlab-gpf-full/gpfjs \
+      ./iossifovlab-sfari-frontpage/sfari-frontpage
   }
 
   local gpf_package_image
@@ -76,7 +78,7 @@ function main() {
   build_stage "Build iossifovlab-gpf"
   {
     # copy gpf package
-    build_run_local mkdir -p ./iossifovlab-gpf/gpf
+    build_run_local mkdir ./iossifovlab-gpf/gpf
     build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf/ /gpf
 
 
@@ -91,7 +93,7 @@ function main() {
   {
 
     # copy gpfjs package
-    build_run_local mkdir -p ./iossifovlab-gpf-full/gpfjs
+    build_run_local mkdir ./iossifovlab-gpf-full/gpfjs
     build_docker_image_cp_from "$gpfjs_package_image" ./iossifovlab-gpf-full/ /gpfjs
 
 
@@ -113,7 +115,7 @@ function main() {
   build_stage "Build sfari-frontpage"
   {
     # copy sfari-frontpage package
-    build_run_local mkdir -p ./iossifovlab-sfari-frontpage/sfari-frontpage
+    build_run_local mkdir ./iossifovlab-sfari-frontpage/sfari-frontpage
     build_docker_image_cp_from "$sfari_frontpage_package_image" ./iossifovlab-sfari-frontpage/ /sfari-frontpage
 
     build_run_ctx_init "local"
