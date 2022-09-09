@@ -31,6 +31,7 @@ while declare -p "GPF_INSTANCES_${i}_ENDPOINT" &> /dev/null; do
 	<Location "/${GPF_INSTANCES_'"${i}"'_PREFIX}">
 		ProxyPass "http://${GPF_INSTANCES_'"${i}"'_ENDPOINT}/${GPF_INSTANCES_'"${i}"'_PREFIX}"
 		ProxyPassReverse "http://${GPF_INSTANCES_'"${i}"'_ENDPOINT}/${GPF_INSTANCES_'"${i}"'_PREFIX}"
+		ProxyPreserveHost On
 		Allow from all
 	</Location>
 '
