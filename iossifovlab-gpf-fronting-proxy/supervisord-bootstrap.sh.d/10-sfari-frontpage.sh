@@ -41,3 +41,16 @@ done;
 cat <<<"$GPF_INSTANCES_REVERSE_PROXIES_CONFIG" > /etc/apache2/sites-available/localhost.conf.gpf_instances_reverse_proxies
 
 a2ensite localhost
+
+supervisorctl start apache2
+
+if ! /wait-for-it.sh localhost:80 -t 240; then
+    echo -e "\n---------------------------------------"
+    echo -e "  Apache2 not ready! Exiting..."
+    echo -e "---------------------------------------"
+    exit 1
+fi
+
+echo -e "\n\n--------------------------------------------------------------------------------"
+echo -e "Apache2 running..."
+echo -e "--------------------------------------------------------------------------------\n\n"
