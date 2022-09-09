@@ -122,6 +122,18 @@ function main() {
     build_docker_image_create "iossifovlab-sfari-frontpage" "iossifovlab-sfari-frontpage" \
       ./iossifovlab-sfari-frontpage/Dockerfile "$docker_img_iossifovlab_http_tag"
   }
+
+  build_stage "Build gpf fronting proxy"
+  {
+    local docker_repo
+    docker_repo=$(ee docker_repo)
+
+    local docker_img_iossifovlab_http_tag
+    docker_img_iossifovlab_http_tag=$(e docker_img_iossifovlab_http_tag)
+
+    build_docker_image_create "iossifovlab-gpf-fronting-proxy" "iossifovlab-gpf-fronting-proxy" \
+      ./iossifovlab-gpf-fronting-proxy/Dockerfile "$docker_img_iossifovlab_http_tag"
+  }
 }
 
 main "$@"
