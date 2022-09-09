@@ -2,8 +2,6 @@ version: '2'
 services:
   mysqldata:
       image: busybox:latest
-      volumes:
-        - /data/iordan/mysql/:/var/lib/mysql
       command: echo "mysql data only container"
 
   mysql:
@@ -34,7 +32,7 @@ services:
       volumes:
       - ${DAE_DB_DIR}:/data
       - ${DAE_PHENODB_DIR}:/data-phenodb
-      - /data/iordan/grrCache:/cache
+      - /home/hristo/grr-cache:/cache
       environment:
       - DAE_DB_DIR=/data
       - DAE_PHENODB_DIR=/data-phenodb
