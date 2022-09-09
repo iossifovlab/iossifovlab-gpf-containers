@@ -1,0 +1,89 @@
+version: '2'
+services:
+  mysqldata:
+      image: busybox:latest
+      volumes:
+        - /data/iordan/mysql/:/var/lib/mysql
+      command: echo "mysql data only container"
+
+  mysql:
+      image: mysql:5.7.36
+      hostname: mysql
+      environment:
+        - MYSQL_DATABASE=gpf
+        - MYSQL_USER=seqpipe
+        - MYSQL_PASSWORD=secret
+        - MYSQL_ROOT_PASSWORD=secret
+      volumes_from:
+        - mysqldata
+      networks:
+        main:
+          aliases:
+            - mysql
+      ports:
+        - "3306:3306"
+      command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_bin', ]
+
+  gpf:
+      image: registry.seqpipe.org/iossifovlab-gpf-full:oauth-latest
+      hostname: gpf
+      networks:
+        main:
+          aliases:
+            - gpf
+      volumes:
+      - ${DAE_DB_DIR}:/data
+      - ${DAE_PHENODB_DIR}:/data-phenodb
+      - /data/iordan/grrCache:/cache
+      environment:
+      - DAE_DB_DIR=/data
+      - DAE_PHENODB_DIR=/data-phenodb
+      - WDAE_DB_NAME=gpf
+      - WDAE_DB_USER=seqpipe
+      - WDAE_DB_PASSWORD=secret
+      - WDAE_DB_HOST=mysql
+      - WDAE_DB_PORT=3306
+      - WDAE_SECRET_KEY="123456789012345678901234567890123456789012345678901234567890"
+      - WDAE_ALLOWED_HOST=*
+      - WDAE_DEBUG=True
+      - WDAE_PUBLIC_HOSTNAME=gpf
+      - GPF_PREFIX=gpf_prefix
+      - WDAE_PREFIX=gpf_prefix
+      - GRR_DEFINITION_FILE=/cache/grr_definition.yaml
+      - IMPALA_HOSTS=seqclust0 seqclust1 seqclust2
+      - DOCKER_COMPOSE_CORS_WORKAROUND=True
+
+  frontpage:
+      image: registry.seqpipe.org/iossifovlab-sfari-frontpage:oauth-latest
+      hostname: frontpage
+      networks:
+        main:
+          aliases:
+            - frontpage
+      environment:
+      - GPF_FRONTPAGE_INSTANCE_PREFIX=frontpage_prefix
+      - GPF_OAUTH_ENDPOINT=localhost:9000
+      - GPF_OAUTH_PREFIX=gpf_prefix
+      - GPF_INSTANCES_1_ENDPOINT=localhost:9000
+      - GPF_INSTANCES_1_PREFIX=gpf_prefix
+      - GPF_INSTANCES_1_API_PATH=/api/v3/
+      - GPF_INSTANCES_1_FRONTEND_PATH=/
+
+  proxy:
+      image: registry.seqpipe.org/iossifovlab-gpf-fronting-proxy:oauth-latest
+      hostname: proxy
+      ports:
+      - "9000:80"
+      networks:
+        main:
+          aliases:
+            - proxy
+      environment:
+       - GPF_FRONTPAGE_INSTANCE_ENDPOINT=frontpage:80
+       - GPF_FRONTPAGE_INSTANCE_PREFIX=frontpage_prefix
+       - GPF_INSTANCES_1_ENDPOINT=gpf:80
+       - GPF_INSTANCES_1_PREFIX=gpf_prefix
+
+
+networks:
+  main:
