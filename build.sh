@@ -35,7 +35,7 @@ function main() {
   libmain_init_build_env \
     clobber:"$clobber" preset:"$preset" build_no:"$build_no" \
     generate_jenkins_init:"$generate_jenkins_init" expose_ports:"$expose_ports" \
-    iossifovlab.gpf iossifovlab.gpfjs
+    iossifovlab.gpf iossifovlab.gpfjs iossifovlab.sfari-frontpage
   libmain_save_build_env_on_exit
   libbuild_init stage:"$stage" registry.seqpipe.org
 
@@ -47,7 +47,9 @@ function main() {
     build_run_ctx_init "container" "ubuntu:20.04"
     defer_ret build_run_ctx_reset
     build_run rm -rf \
-      ./iossifovlab-gpf/gpf
+      ./iossifovlab-gpf/gpf \
+      ./iossifovlab-gpf-full/gpfjs \
+      ./iossifovlab-sfari-frontpage/sfari-frontpage
   }
 
   local gpf_package_image
@@ -55,6 +57,9 @@ function main() {
 
   local gpfjs_package_image
   gpfjs_package_image=$(e docker_data_img_gpfjs_package)
+
+  local sfari_frontpage_package_image
+  sfari_frontpage_package_image=$(e docker_data_img_sfari_frontpage_package)
 
   build_stage "Build iossifovlab-http"
   {
@@ -73,9 +78,8 @@ function main() {
   build_stage "Build iossifovlab-gpf"
   {
     # copy gpf package
-    build_run_local mkdir -p ./iossifovlab-gpf/gpf
+    build_run_local mkdir ./iossifovlab-gpf/gpf
     build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf/ /gpf
-
 
     build_docker_image_create \
       "iossifovlab-gpf" \
@@ -88,14 +92,8 @@ function main() {
   {
 
     # copy gpfjs package
-    build_run_local mkdir -p ./iossifovlab-gpf-full/gpfjs
+    build_run_local mkdir ./iossifovlab-gpf-full/gpfjs
     build_docker_image_cp_from "$gpfjs_package_image" ./iossifovlab-gpf-full/ /gpfjs
-
-
-    build_run_ctx_init "local"
-    defer_ret build_run_ctx_reset
-
-    build_run cd iossifovlab-gpf-full
 
     local docker_repo
     docker_repo=$(ee docker_repo)
@@ -105,6 +103,36 @@ function main() {
 
     build_docker_image_create "iossifovlab-gpf-full" "iossifovlab-gpf-full" \
       ./iossifovlab-gpf-full/Dockerfile "${docker_img_iossifovlab_gpf_tag}"
+
+
+  }
+
+  build_stage "Build sfari-frontpage"
+  {
+    # copy sfari-frontpage package
+    build_run_local mkdir ./iossifovlab-sfari-frontpage/sfari-frontpage
+    build_docker_image_cp_from "$sfari_frontpage_package_image" ./iossifovlab-sfari-frontpage/ /sfari-frontpage
+
+    local docker_repo
+    docker_repo=$(ee docker_repo)
+
+    local docker_img_iossifovlab_http_tag
+    docker_img_iossifovlab_http_tag=$(e docker_img_iossifovlab_http_tag)
+
+    build_docker_image_create "iossifovlab-sfari-frontpage" "iossifovlab-sfari-frontpage" \
+      ./iossifovlab-sfari-frontpage/Dockerfile "$docker_img_iossifovlab_http_tag"
+  }
+
+  build_stage "Build gpf fronting proxy"
+  {
+    local docker_repo
+    docker_repo=$(ee docker_repo)
+
+    local docker_img_iossifovlab_http_tag
+    docker_img_iossifovlab_http_tag=$(e docker_img_iossifovlab_http_tag)
+
+    build_docker_image_create "iossifovlab-gpf-fronting-proxy" "iossifovlab-gpf-fronting-proxy" \
+      ./iossifovlab-gpf-fronting-proxy/Dockerfile "$docker_img_iossifovlab_http_tag"
   }
 }
 
