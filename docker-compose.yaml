@@ -32,7 +32,7 @@ services:
       volumes:
       - ${DAE_DB_DIR}:/data
       - ${DAE_PHENODB_DIR}:/data-phenodb
-      - /home/hristo/grr-cache:/cache
+      - ${HOME}/grr-cache:/cache
       environment:
       - DAE_DB_DIR=/data
       - DAE_PHENODB_DIR=/data-phenodb
