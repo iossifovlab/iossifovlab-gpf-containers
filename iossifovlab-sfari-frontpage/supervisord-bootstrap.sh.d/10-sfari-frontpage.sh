@@ -29,34 +29,6 @@ declare -p GPF_OAUTH_PREFIX &> /dev/null  || (echo "gpf oauth instance: missing 
 declare -p GPF_INSTANCES_1_ENDPOINT &> /dev/null || (echo "gpf instances: at least one declared instance is required"; exit 1)
 
 #
-# placeholder object
-#
-
-# the placeholder object is hardcoded, it must be changed if the environment object changes
-# the formatting is intentional  - the string must be evalutated as one line without spaces
-placeholder_environment_object=''\
-'{'\
-'production:!0,'\
-'oauthClientId:"gpfjs-frontpage",'\
-'instances:'\
-'{'\
-'thisPropertyAndObjectMustBeReplacedWhenInProdution:'\
-'{'\
-'apiPath:"mustBeReplacedWhenInProduction:http://localhost:9000/gpf_prefix/api/v3/",'\
-'frontendPath:"mustBeReplacedWhenInProduction:http://localhost:9000/gpf_prefix/"'\
-'}'\
-'},'\
-'authPath:"mustBeReplacedWhenInProduction:http://localhost:9000/gpf_prefix/"'\
-'}'
-
-
-# check that the placeholder environment object exists in the to be patched .js file
-if ! grep -q -F -e "$placeholder_environment_object" /site/frontpage/main.*.js; then
-	echo "could not find minified environment object !"
-	exit 1
-fi
-
-#
 # create the production environment object
 #
 
@@ -113,20 +85,76 @@ production_environment_object+=''\
 # done !
 
 #
-# replace the placeholder object with the production environment object
+# placeholder object
 #
 
-sed -i -e 's|'"$placeholder_environment_object"'|'"$production_environment_object"'|' /site/frontpage/main.*.js
+# the placeholder object is hardcoded, it must be changed if the environment object changes
+# the formatting is intentional  - the string must be evalutated as one line without spaces
+placeholder_environment_object=''\
+'{'\
+'production:!0,'\
+'oauthClientId:"gpfjs-frontpage",'\
+'instances:'\
+'{'\
+'thisPropertyAndObjectMustBeReplacedWhenInProdution:'\
+'{'\
+'apiPath:"mustBeReplacedWhenInProduction:http://localhost:9000/gpf_prefix/api/v3/",'\
+'frontendPath:"mustBeReplacedWhenInProduction:http://localhost:9000/gpf_prefix/"'\
+'}'\
+'},'\
+'authPath:"mustBeReplacedWhenInProduction:http://localhost:9000/gpf_prefix/"'\
+'}'
+
 
 #
-# replace the base href in index.html
+# Patch the placeholder configuration with the production configuration
 #
 
-sed -i -e 's|<base href="">|<base href="/'"$GPF_FRONTPAGE_INSTANCE_PREFIX"'/">|' /site/frontpage/index.html
+
+must_patch="true"
+
+# check if the environment is already patched
+if grep -q -F -e "$production_environment_object" /site/frontpage/main.*.js; then
+	must_patch="false"
+# check that the placeholder environment object exists in the to be patched .js file
+elif ! grep -q -F -e "$placeholder_environment_object" /site/frontpage/main.*.js; then
+	echo "could not find minified environment object !"
+	exit 1
+fi
+
+# perform actual patching if needed
+if [ "$must_patch" == "true" ]; then
+
+	#
+	# replace the placeholder object with the production environment object
+	#
+
+	sed -i -e 's|'"$placeholder_environment_object"'|'"$production_environment_object"'|' /site/frontpage/main.*.js
+
+	#
+	# replace the base href in index.html
+	#
+
+	sed -i -e 's|<base href="">|<base href="/'"$GPF_FRONTPAGE_INSTANCE_PREFIX"'/">|' /site/frontpage/index.html
+
+fi
+
+
+#
+# enable the apache2 site configuration
+#
 
 a2ensite localhost
 
+#
+# start apache2 service
+#
+
 supervisorctl start apache2
+
+#
+# wait for the apache2 service to become available
+#
 
 if ! /wait-for-it.sh localhost:80 -t 240; then
     echo -e "\n---------------------------------------"
