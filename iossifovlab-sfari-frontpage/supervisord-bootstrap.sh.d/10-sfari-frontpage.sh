@@ -61,8 +61,8 @@ while declare -p "GPF_INSTANCES_${i}_ENDPOINT" &> /dev/null; do
 	production_environment_object+=''\
 "$name"':'\
 '{'\
-'apiPath:"'"http://$endpoint/$prefix/$api_path"'",'\
-'frontendPath:"'"http://$endpoint/$prefix/$frontend_path"'",'\
+'apiPath:"'"//$endpoint/$prefix/$api_path"'",'\
+'frontendPath:"'"//$endpoint/$prefix/$frontend_path"'",'\
 '},'
 
 	i=$((i+1))
@@ -79,7 +79,7 @@ production_environment_object+=''\
 
 
 production_environment_object+=''\
-'authPath:"'"http://$GPF_OAUTH_ENDPOINT/$GPF_OAUTH_PREFIX"'"'\
+'authPath:"'"//$GPF_OAUTH_ENDPOINT/$GPF_OAUTH_PREFIX"'"'\
 '}'
 
 # done !
