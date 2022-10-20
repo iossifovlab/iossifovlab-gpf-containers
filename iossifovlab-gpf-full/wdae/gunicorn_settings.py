@@ -2,4 +2,9 @@
 import os
 from .settings import *  # type: ignore
 
-STUDIES_EAGER_LOADING = True
+STUDIES_EAGER_LOADING = False
+
+CSRF_TRUSTED_ORIGINS = [
+        "https://gpf.sfari.org",
+]
+
