@@ -8,6 +8,11 @@ for impala_host in ${IMPALA_HOSTS}; do
     echo "done..."
 done
 
+echo "waiting for mysql on '${WDAE_DB_HOST}:${WDAE_DB_PORT}'..."
+/wait-for-it.sh ${WDAE_DB_HOST}:${WDAE_DB_PORT} -t 300
+echo "done..."
+
+
 source /gpf/bin/activate
 
 wdaemanage.py migrate
