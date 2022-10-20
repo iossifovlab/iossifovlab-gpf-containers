@@ -24,6 +24,7 @@ COPY ./wdae/wdae.wsgi /code/wdae/wdae/wdae/wsgi.py
 COPY ./wdae/gunicorn.wsgi /code/wdae/wdae/wdae/gunicorn_wsgi.py
 COPY ./wdae/settings.py /code/wdae/wdae/wdae/settings.py
 COPY ./wdae/gunicorn_settings.py /code/wdae/wdae/wdae/gunicorn_settings.py
+COPY ./wdae/create_oauth_app.py /code/wdae/wdae/wdae/create_oauth_app.py
 
 RUN source /gpf/bin/activate && cd /code/wdae/ && pip install .
 
