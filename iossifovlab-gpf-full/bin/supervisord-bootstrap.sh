@@ -17,6 +17,8 @@ source /gpf/bin/activate
 
 wdaemanage.py migrate
 
+wdaemanage.py collectstatic
+
 supervisorctl start gpf
 
 /wait-for-it.sh localhost:9001 -t 240

@@ -90,7 +90,7 @@ ALLOWED_HOSTS = [
 
 TIME_ZONE = "US/Eastern"
 
-# STATIC_ROOT = '/code/gpf/static'
+STATIC_ROOT = '/site/gpf/static'
 
 
 LOGGING = {
