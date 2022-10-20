@@ -30,8 +30,8 @@ services:
           aliases:
             - gpf
       volumes:
-      - ${DAE_DB_DIR}:/data
-      - ${DAE_PHENODB_DIR}:/data-phenodb
+      - ${DAE_DB_DIR:?DAE_DB_DIR is not defined}:/data
+      - ${DAE_PHENODB_DIR:?DAE_PHENODB_DIR is not defined}:/data-phenodb
       - ${GRR_CACHE:?GRR_CACHE is not defined}:/cache
       environment:
       - DAE_DB_DIR=/data
