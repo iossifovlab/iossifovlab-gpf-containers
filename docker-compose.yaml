@@ -1,3 +1,17 @@
+################################################################################
+#
+# Notes on how to bootstrap first run:
+#
+# * Create admin user:
+# wdaemanage.py user_create admin@iossifovlab.com -p secret -g any_dataset:admin
+#
+# * Create dev apps:
+# cd /gpf/lib/python3.9/site-packages/wdae
+# wdaemanage.py shell < create_dev_apps.py
+#
+################################################################################
+
+
 version: '2.1'
 services:
   mysqldata:
@@ -23,7 +37,7 @@ services:
       command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_bin', ]
 
   gpf:
-      image: registry.seqpipe.org/iossifovlab-gpf-full:latest
+      image: registry.seqpipe.org/iossifovlab-gpf-full:fix-collectstatic-latest
       hostname: gpf
       networks:
         main:
@@ -52,7 +66,7 @@ services:
       - DOCKER_COMPOSE_CORS_WORKAROUND=True
 
   frontpage:
-      image: registry.seqpipe.org/iossifovlab-sfari-frontpage:latest
+      image: registry.seqpipe.org/iossifovlab-sfari-frontpage:fix-collectstatic-latest
       hostname: frontpage
       networks:
         main:
@@ -68,7 +82,7 @@ services:
       - GPF_INSTANCES_1_FRONTEND_PATH=/
 
   proxy:
-      image: registry.seqpipe.org/iossifovlab-gpf-fronting-proxy:latest
+      image: registry.seqpipe.org/iossifovlab-gpf-fronting-proxy:fix-collectstatic-latest
       hostname: proxy
       ports:
       - "9000:80"
