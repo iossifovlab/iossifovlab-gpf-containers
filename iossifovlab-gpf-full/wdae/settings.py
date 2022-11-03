@@ -65,13 +65,8 @@ if DEBUG:
     DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + \
         ["rest_framework.renderers.BrowsableAPIRenderer", ]
 
-REST_FRAMEWORK = {
-    'PAGINATE_BY': 10,
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'users_api.authentication.SessionAuthenticationWithoutCSRF',
-    ),
-    'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
-}
+REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = DEFAULT_RENDERER_CLASSES
+
 
 DATABASES = {
     'default': {
@@ -161,39 +156,6 @@ LOGGING = {
             "level": "DEBUG",
             "propagate": True,
         },
-    },
-}
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/code/gpf/cache/wdae_django_default.cache',
-        'TIMEOUT': 3600,
-        'OPTIONS': {
-            'MAX_ENTRIES': 10000
-        }
-    },
-
-    'long': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/code/gpf/cache/wdae_django_default.cache',
-        'TIMEOUT': 86400,
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        }
-    },
-
-
-    'pre': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/code/gpf/cache/wdae_django_pre.cache',
-        'TIMEOUT': None,
-    },
-
-    'enrichment': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-        'TIMEOUT': 60,
     },
 }
 

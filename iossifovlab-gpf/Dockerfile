@@ -31,7 +31,6 @@ FROM ubuntu:22.04 AS runtime
 
 # Copy /gpf environment from the previous stage:
 COPY --from=build /gpf /gpf
-COPY --from=build /code /code
 
 # When image is run, run the code with the environment
 # activated:

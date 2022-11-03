@@ -1,3 +1,17 @@
+################################################################################
+#
+# Notes on how to bootstrap first run:
+#
+# * Create admin user:
+# wdaemanage.py user_create admin@iossifovlab.com -p secret -g any_dataset:admin
+#
+# * Create dev apps:
+# cd /gpf/lib/python3.9/site-packages/wdae
+# wdaemanage.py shell < create_dev_apps.py
+#
+################################################################################
+
+
 version: '2.1'
 services:
   mysqldata:
