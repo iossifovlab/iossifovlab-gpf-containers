@@ -65,14 +65,8 @@ if DEBUG:
     DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + \
         ["rest_framework.renderers.BrowsableAPIRenderer", ]
 
-REST_FRAMEWORK = {
-    "PAGE_SIZE": 10,
-    'PAGINATE_BY': 10,
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'users_api.authentication.SessionAuthenticationWithoutCSRF',
-    ),
-    'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
-}
+REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = DEFAULT_RENDERER_CLASSES
+
 
 DATABASES = {
     'default': {
