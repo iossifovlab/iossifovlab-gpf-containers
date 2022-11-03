@@ -17,7 +17,7 @@ source /gpf/bin/activate
 
 wdaemanage.py migrate
 
-wdaemanage.py collectstatic
+wdaemanage.py collectstatic --noinput
 
 supervisorctl start gpf
 
