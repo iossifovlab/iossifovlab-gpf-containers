@@ -35,7 +35,7 @@ function main() {
   libmain_init_build_env \
     clobber:"$clobber" preset:"$preset" build_no:"$build_no" \
     generate_jenkins_init:"$generate_jenkins_init" expose_ports:"$expose_ports" \
-    iossifovlab.gpf iossifovlab.gpfjs iossifovlab.sfari-frontpage
+    iossifovlab.gpf iossifovlab.gpfjs # iossifovlab.sfari-frontpage
   libmain_save_build_env_on_exit
   libbuild_init stage:"$stage" registry.seqpipe.org
 
@@ -70,10 +70,10 @@ function main() {
       "latest"
   }
 
-  local docker_img_iossifovlab_miniconda_base_tag
-  docker_img_iossifovlab_miniconda_base_tag="$(e docker_img_iossifovlab_miniconda_base_tag)"
+  local docker_img_iossifovlab_mamba_base_tag
+  docker_img_iossifovlab_mamba_base_tag="$(e docker_img_iossifovlab_mamba_base_tag)"
 
-  echo "docker_img_iossifovlab_miniconda_base_tag=$docker_img_iossifovlab_miniconda_base_tag"
+  echo "docker_img_iossifovlab_mamba_base_tag=$docker_img_iossifovlab_mamba_base_tag"
 
   build_stage "Build iossifovlab-gpf"
   {
@@ -85,7 +85,7 @@ function main() {
       "iossifovlab-gpf" \
       "iossifovlab-gpf" \
       "iossifovlab-gpf/Dockerfile" \
-      "$docker_img_iossifovlab_miniconda_base_tag"
+      "$docker_img_iossifovlab_mamba_base_tag"
   }
 
   build_stage "Build gpf-full"

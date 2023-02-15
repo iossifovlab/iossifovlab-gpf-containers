@@ -1,7 +1,7 @@
 # The build-stage image:
 ARG REGISTRY=""
 ARG BASE_IMAGE_TAG=latest
-FROM ${REGISTRY}iossifovlab-miniconda-base:${BASE_IMAGE_TAG} AS build
+FROM ${REGISTRY}iossifovlab-mamba-base:${BASE_IMAGE_TAG} AS build
 
 COPY gpf/environment.yml /
 
