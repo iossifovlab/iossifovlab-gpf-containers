@@ -75,17 +75,30 @@ function main() {
 
   echo "docker_img_iossifovlab_mamba_base_tag=$docker_img_iossifovlab_mamba_base_tag"
 
-  build_stage "Build iossifovlab-gpf"
+  build_stage "Build iossifovlab-gpf-base"
   {
     # copy gpf package
     build_run_local mkdir ./iossifovlab-gpf/gpf
     build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf/ /gpf
 
     build_docker_image_create \
+      "iossifovlab-gpf-base" \
+      "iossifovlab-gpf-base" \
+      "iossifovlab-gpf-base/Dockerfile" \
+      "$docker_img_iossifovlab_mamba_base_tag" "false"
+  }
+
+  local docker_img_iossifovlab_gpf_base_tag
+  docker_img_iossifovlab_gpf_base_tag="$(e docker_img_iossifovlab_gpf_base_tag)"
+
+  build_stage "Build iossifovlab-gpf"
+  {
+
+    build_docker_image_create \
       "iossifovlab-gpf" \
       "iossifovlab-gpf" \
       "iossifovlab-gpf/Dockerfile" \
-      "$docker_img_iossifovlab_mamba_base_tag"
+      "$docker_img_iossifovlab_gpf_base_tag"
   }
 
   build_stage "Build gpf-full"
