@@ -47,6 +47,7 @@ function main() {
     build_run_ctx_init "container" "ubuntu:20.04"
     defer_ret build_run_ctx_reset
     build_run rm -rf \
+      ./iossifovlab-gpf-base/gpf \
       ./iossifovlab-gpf/gpf \
       ./iossifovlab-gpf-full/gpfjs \
       ./iossifovlab-sfari-frontpage/sfari-frontpage
@@ -78,8 +79,8 @@ function main() {
   build_stage "Build iossifovlab-gpf-base"
   {
     # copy gpf package
-    build_run_local mkdir ./iossifovlab-gpf/gpf
-    build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf/ /gpf
+    build_run_local mkdir ./iossifovlab-gpf-base/gpf
+    build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf-base/ /gpf
 
     build_docker_image_create \
       "iossifovlab-gpf-base" \
