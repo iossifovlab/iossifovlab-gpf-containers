@@ -7,9 +7,6 @@ COPY gpf/environment.yml /
 
 RUN mamba env create --name gpf --file /environment.yml
 
-RUN mamba install -n gpf -c defaults -c conda-forge \
-  gunicorn=20.1.0 mysqlclient=2.0.3 raven=6.10.0
-
 RUN mkdir -p /code
 WORKDIR /code
 COPY gpf /code
