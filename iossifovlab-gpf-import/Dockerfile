@@ -7,7 +7,9 @@ RUN mamba install -y -n gpf -c defaults -c conda-forge -c iossifovlab -c biocond
   gunicorn=20.1.0 \
   mysqlclient=2.0.3 \
   raven=6.10.0 \
-  hadoop=3.1.2
+  hadoop=3.1.2 \
+  dask-kubernetes=2022.12 \
+  dask-jobqueue=0.8.1
 
 RUN conda-pack -n gpf -o /tmp/gpf.tar && \
   mkdir /gpf && cd /gpf && tar xf /tmp/gpf.tar && \

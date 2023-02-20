@@ -22,7 +22,8 @@ include libopt.sh
 function main() {
   local -A options
   libopt_parse options \
-    stage:all preset:fast clobber:allow_if_matching_values build_no:0 generate_jenkins_init:no expose_ports:no -- "$@"
+    stage:all preset:fast clobber:allow_if_matching_values \
+    build_no:0 generate_jenkins_init:no expose_ports:no -- "$@"
 
   local preset="${options["preset"]}"
   local stage="${options["stage"]}"
@@ -31,9 +32,8 @@ function main() {
   local generate_jenkins_init="${options["generate_jenkins_init"]}"
   local expose_ports="${options["expose_ports"]}"
 
-  libmain_init iossifovlab.iossifovlab-gpf-containers sgc
-  libmain_init_build_env \
-    clobber:"$clobber" preset:"$preset" build_no:"$build_no" \
+  libmain_init iossifovlab.iossifovlab-gpf-containers igc
+  libmain_init_build_env clobber:"$clobber" preset:"$preset" build_no:"$build_no" \
     generate_jenkins_init:"$generate_jenkins_init" expose_ports:"$expose_ports" \
     iossifovlab.gpf iossifovlab.gpfjs iossifovlab.sfari-frontpage
   libmain_save_build_env_on_exit
@@ -102,6 +102,16 @@ function main() {
       "$docker_img_iossifovlab_gpf_base_tag"
   }
 
+  build_stage "Build iossifovlab-gpf-import"
+  {
+
+    build_docker_image_create \
+      "iossifovlab-gpf-import" \
+      "iossifovlab-gpf-import" \
+      "iossifovlab-gpf-import/Dockerfile" \
+      "$docker_img_iossifovlab_gpf_base_tag"
+  }
+
   build_stage "Build gpf-full"
   {
 
@@ -125,7 +135,8 @@ function main() {
   {
     # copy sfari-frontpage package
     build_run_local mkdir ./iossifovlab-sfari-frontpage/sfari-frontpage
-    build_docker_image_cp_from "$sfari_frontpage_package_image" ./iossifovlab-sfari-frontpage/ /sfari-frontpage
+    build_docker_image_cp_from "$sfari_frontpage_package_image" \
+        ./iossifovlab-sfari-frontpage/ /sfari-frontpage
 
     local docker_repo
     docker_repo=$(ee docker_repo)
@@ -133,8 +144,11 @@ function main() {
     local docker_img_iossifovlab_http_tag
     docker_img_iossifovlab_http_tag=$(e docker_img_iossifovlab_http_tag)
 
-    build_docker_image_create "iossifovlab-sfari-frontpage" "iossifovlab-sfari-frontpage" \
-      ./iossifovlab-sfari-frontpage/Dockerfile "$docker_img_iossifovlab_http_tag"
+    build_docker_image_create \
+      "iossifovlab-sfari-frontpage" \
+      "iossifovlab-sfari-frontpage" \
+      "iossifovlab-sfari-frontpage/Dockerfile" \
+      "$docker_img_iossifovlab_http_tag"
   }
 
   build_stage "Build gpf fronting proxy"
@@ -145,9 +159,13 @@ function main() {
     local docker_img_iossifovlab_http_tag
     docker_img_iossifovlab_http_tag=$(e docker_img_iossifovlab_http_tag)
 
-    build_docker_image_create "iossifovlab-gpf-fronting-proxy" "iossifovlab-gpf-fronting-proxy" \
-      ./iossifovlab-gpf-fronting-proxy/Dockerfile "$docker_img_iossifovlab_http_tag"
+    build_docker_image_create \
+      "iossifovlab-gpf-fronting-proxy" \
+      "iossifovlab-gpf-fronting-proxy" \
+      "iossifovlab-gpf-fronting-proxy/Dockerfile" \
+      "$docker_img_iossifovlab_http_tag"
   }
+
 }
 
 main "$@"
