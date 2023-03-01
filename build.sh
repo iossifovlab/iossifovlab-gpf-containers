@@ -86,7 +86,7 @@ function main() {
       "iossifovlab-gpf-base" \
       "iossifovlab-gpf-base" \
       "iossifovlab-gpf-base/Dockerfile" \
-      "$docker_img_iossifovlab_mamba_base_tag" "false"
+      "$docker_img_iossifovlab_mamba_base_tag"
   }
 
   local docker_img_iossifovlab_gpf_base_tag
