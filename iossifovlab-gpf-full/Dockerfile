@@ -8,7 +8,7 @@ SHELL ["/bin/bash", "-c"]
 RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y \
 		supervisor less \
-		apache2 && \
+		apache2 mysql-client && \
 	DEBIAN_FRONTEND=noninteractive apt-get clean
 
 RUN mkdir -p /logs
