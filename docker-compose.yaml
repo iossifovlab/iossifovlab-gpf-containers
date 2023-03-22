@@ -59,6 +59,7 @@ services:
       - WDAE_ALLOWED_HOST=*
       - WDAE_DEBUG=True
       - WDAE_PUBLIC_HOSTNAME=gpf
+      - WDAE_LOG_DIR=/logs
       - GPF_PREFIX=gpf_prefix
       - WDAE_PREFIX=gpf_prefix
       - GRR_DEFINITION_FILE=/cache/grr_definition.yaml
