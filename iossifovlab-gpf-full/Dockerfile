@@ -20,11 +20,11 @@ COPY gpfjs /site/gpf
 WORKDIR /site
 
 # configure wdae
-COPY ./wdae/wdae.wsgi /gpf/lib/python3.10/site-packages/wdae/wsgi.py
-COPY ./wdae/gunicorn.wsgi /gpf/lib/python3.10/site-packages/wdae/gunicorn_wsgi.py
-COPY ./wdae/settings.py /gpf/lib/python3.10/site-packages/wdae/settings.py
-COPY ./wdae/gunicorn_settings.py /gpf/lib/python3.10/site-packages/wdae/gunicorn_settings.py
-COPY ./wdae/create_oauth_app.py /gpf/lib/python3.10/site-packages/wdae/create_oauth_app.py
+COPY ./wdae/wdae.wsgi /gpf/lib/python3.9/site-packages/wdae/wsgi.py
+COPY ./wdae/gunicorn.wsgi /gpf/lib/python3.9/site-packages/wdae/gunicorn_wsgi.py
+COPY ./wdae/settings.py /gpf/lib/python3.9/site-packages/wdae/settings.py
+COPY ./wdae/gunicorn_settings.py /gpf/lib/python3.9/site-packages/wdae/gunicorn_settings.py
+COPY ./wdae/create_oauth_app.py /gpf/lib/python3.9/site-packages/wdae/create_oauth_app.py
 
 # RUN source /gpf/bin/activate && wdaemanage.py collectstatic --noinput
 
