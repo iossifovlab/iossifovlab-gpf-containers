@@ -44,7 +44,6 @@ function main() {
 
   build_stage "Cleanup"
   {
-    build_run_local docker pull "ubuntu:22.04"
     build_run_ctx_init "container" "ubuntu:22.04"
     defer_ret build_run_ctx_reset
     build_run rm -rf \
@@ -65,6 +64,8 @@ function main() {
 
   build_stage "Build iossifovlab-http"
   {
+    build_run_local docker pull ubuntu:22.04
+
     build_docker_image_create \
       "iossifovlab-http" \
       "iossifovlab-http" \
