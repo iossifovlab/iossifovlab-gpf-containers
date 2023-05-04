@@ -44,7 +44,8 @@ function main() {
 
   build_stage "Cleanup"
   {
-    build_run_ctx_init "container" "ubuntu:20.04"
+    build_run_local docker pull "ubuntu:22.04"
+    build_run_ctx_init "container" "ubuntu:22.04"
     defer_ret build_run_ctx_reset
     build_run rm -rf \
       ./iossifovlab-gpf-base/gpf \
