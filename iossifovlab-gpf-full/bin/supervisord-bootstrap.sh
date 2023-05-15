@@ -45,7 +45,6 @@ fi
 if [[ ! -z "${GPF_PREFIX}" ]]; then
 sed -i "s/gpf_prefix/${GPF_PREFIX}/g" /site/gpf/index.html
 sed -i "s/gpf_prefix/${GPF_PREFIX}/g" /etc/apache2/sites-available/localhost.conf
-
 fi
 
 if [[ ! -z "${DAE_PHENODB_DIR}" ]]; then
@@ -54,7 +53,10 @@ fi
 
 if [ "${DOCKER_COMPOSE_CORS_WORKAROUND}" == "True" ]; then
 sed -i '/^<VirtualHost \*:80>$/ a\ \ \ \ Header always set Access-Control-Allow-Origin http://localhost:8080\n    Header always set Access-Control-Allow-Credentials true\n    Header always set Access-Control-Allow-Headers "content-type, authorization"' /etc/apache2/sites-available/localhost.conf
-    
+fi
+
+if [[ ! -z "${APACHE2_VHOST_LISTEN_PORT}" ]]; then
+sed -i "s/<VirtualHost \*:80>/<VirtualHost \*:${APACHE2_VHOST_LISTEN_PORT}>/g" /etc/apache2/sites-available/localhost.conf
 fi
 
 sed -i "s/Timeout 300/Timeout 1200/g" /etc/apache2/apache2.conf
