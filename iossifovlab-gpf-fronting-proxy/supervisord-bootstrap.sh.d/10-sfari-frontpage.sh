@@ -41,6 +41,10 @@ done;
 
 cat <<<"$GPF_INSTANCES_REVERSE_PROXIES_CONFIG" > /etc/apache2/sites-available/localhost.conf.gpf_instances_reverse_proxies
 
+a2enmod headers
+a2enmod session
+a2enmod session_cookie
+a2enmod session_crypto
 a2ensite localhost
 
 supervisorctl start apache2
