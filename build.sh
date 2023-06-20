@@ -47,7 +47,6 @@ function main() {
     build_run_ctx_init "container" "ubuntu:22.04"
     defer_ret build_run_ctx_reset
     build_run rm -rf \
-      ./results \
       ./conda-channel \
       ./iossifovlab-gpf-base/gpf \
       ./iossifovlab-gpf-base/conda-channel \
