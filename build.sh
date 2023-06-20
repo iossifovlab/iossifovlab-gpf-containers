@@ -47,7 +47,10 @@ function main() {
     build_run_ctx_init "container" "ubuntu:22.04"
     defer_ret build_run_ctx_reset
     build_run rm -rf \
+      ./results \
+      ./conda-channel \
       ./iossifovlab-gpf-base/gpf \
+      ./iossifovlab-gpf-base/conda-channel \
       ./iossifovlab-gpf/gpf \
       ./iossifovlab-gpf-full/gpfjs \
       ./iossifovlab-sfari-frontpage/sfari-frontpage
@@ -82,7 +85,8 @@ function main() {
   {
     # copy gpf package
     build_run_local mkdir ./iossifovlab-gpf-base/gpf
-    build_docker_image_cp_from "$gpf_package_image" ./iossifovlab-gpf-base/ /gpf
+    build_run_local bash -c 'cd ./iossifovlab-gpf-base/ && 
+        tar zxf ../results/conda-channel.tar.gz'
 
     build_docker_image_create \
       "iossifovlab-gpf-base" \

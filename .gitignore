@@ -8,3 +8,5 @@ iossifovlab-gpf-full/gpfjs
 seqpipe-gpf-full/Dockerfile.build
 /build-env/*.sh
 .build-scripts-tmp-sessions/
+conda-channel
+results

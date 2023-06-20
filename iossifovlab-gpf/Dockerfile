@@ -6,7 +6,6 @@ FROM ${REGISTRY}iossifovlab-gpf-base:${BASE_IMAGE_TAG} AS build
 RUN mamba install -y -n gpf -c defaults -c conda-forge -c iossifovlab -c bioconda \
   gunicorn=20.1.0 \
   mysqlclient=2.0.3 \
-  raven=6.10.0 \
   hadoop=3.1.2
 
 RUN conda-pack -n gpf -o /tmp/gpf.tar && \
