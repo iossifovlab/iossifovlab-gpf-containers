@@ -59,7 +59,7 @@ function main() {
   gpf_package_image=$(e docker_data_img_gpf_package)
 
   local gpfjs_package_image
-  gpfjs_package_image=$(e docker_data_img_gpfjs_package)
+  gpfjs_package_image=$(e docker_data_img_gpfjs_production_package)
 
   local sfari_frontpage_package_image
   sfari_frontpage_package_image=$(e docker_data_img_sfari_frontpage_package)
