@@ -18,7 +18,7 @@ pipeline {
         copyArtifacts(
           filter: "results/conda-channel.tar.gz",
           fingerprintArtifacts: true,
-          projectName: "iossifovlab/gpf-conda-packaging/master",
+          projectName: "iossifovlab/gpf-conda-packaging/impala-genotype-storage-plugin",
           selector: lastSuccessful())
       }
     }
