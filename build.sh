@@ -64,6 +64,12 @@ function main() {
   local sfari_frontpage_package_image
   sfari_frontpage_package_image=$(e docker_data_img_sfari_frontpage_package)
 
+  build_stage "Draw build dependencies"
+  {
+
+    build_deps_graph_write_image 'build-env/dependency-graph.svg'
+  }
+
   build_stage "Build iossifovlab-http"
   {
     build_run_local docker pull ubuntu:22.04

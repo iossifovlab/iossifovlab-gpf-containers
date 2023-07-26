@@ -36,6 +36,12 @@ pipeline {
       script {
         try {
           echo 'ok'
+
+          archiveArtifacts artifacts: 'build-env/*.svg',
+                  allowEmptyArchive: true,
+                  fingerprint: true,
+                  onlyIfSuccessful: true
+
         } finally {
           zulipNotification(
             topic: "${env.JOB_NAME}"
