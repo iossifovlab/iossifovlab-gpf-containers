@@ -6,7 +6,7 @@ iossifovlab-gpf/gpf/
 iossifovlab-gpf-full/gpfjs
 
 seqpipe-gpf-full/Dockerfile.build
-/build-env/*.sh
+build-env
 .build-scripts-tmp-sessions/
 conda-channel
 results
