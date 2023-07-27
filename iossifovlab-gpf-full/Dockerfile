@@ -43,6 +43,7 @@ ENV APACHE_PID_FILE=/var/run/apache2/apache2.pid
 COPY ./sites-available/localhost.conf /etc/apache2/sites-available/
 
 RUN cat /etc/hostname | awk '{print "ServerName "$1}' >> /etc/apache2/apache2.conf
+RUN echo "SetEnv proxy-initial-not-pooled 1" >> /etc/apache2/apache2.conf
 
 RUN rm -f /etc/apache2/sites-enabled/000-default.conf
 

@@ -24,7 +24,7 @@ ENV APACHE_PID_FILE=/var/run/apache2/apache2.pid
 RUN a2enmod headers ssl
 
 RUN cat /etc/hostname | awk '{print "ServerName "$1}' >> /etc/apache2/apache2.conf
-
+RUN echo "SetEnv proxy-initial-not-pooled 1" >> /etc/apache2/apache2.conf
 RUN rm /etc/apache2/sites-enabled/000-default.conf
 
 ADD ./supervisor/supervisord.conf /etc/
