@@ -3,7 +3,6 @@ FROM condaforge/mambaforge:latest
 
 RUN mkdir conda-channel
 COPY conda-channel /conda-channel/
-RUN ls -l /conda-channel
 
 RUN mamba install -y -n base \
     -c defaults \

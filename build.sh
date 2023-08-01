@@ -51,6 +51,7 @@ function main() {
       ./iossifovlab-gpf-base/gpf \
       ./iossifovlab-gpf-base/conda-channel \
       ./iossifovlab-gpf/gpf \
+      ./iossifovlab-gpf/conda-channel \
       ./iossifovlab-gpf-full/gpfjs \
       ./iossifovlab-sfari-frontpage/sfari-frontpage
   }
