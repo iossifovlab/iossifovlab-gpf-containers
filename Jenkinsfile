@@ -18,7 +18,7 @@ pipeline {
         copyArtifacts(
           filter: "results/conda-channel.tar.gz",
           fingerprintArtifacts: true,
-          projectName: "iossifovlab/gpf-conda-packaging/master",
+          projectName: "iossifovlab/gpf-conda-packaging/impala-genotype-storage-plugin",
           selector: lastSuccessful())
       }
     }
@@ -36,6 +36,12 @@ pipeline {
       script {
         try {
           echo 'ok'
+
+          archiveArtifacts artifacts: 'build-env/*.svg',
+                  allowEmptyArchive: true,
+                  fingerprint: true,
+                  onlyIfSuccessful: true
+
         } finally {
           zulipNotification(
             topic: "${env.JOB_NAME}"

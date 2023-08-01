@@ -51,6 +51,7 @@ function main() {
       ./iossifovlab-gpf-base/gpf \
       ./iossifovlab-gpf-base/conda-channel \
       ./iossifovlab-gpf/gpf \
+      ./iossifovlab-gpf/conda-channel \
       ./iossifovlab-gpf-full/gpfjs \
       ./iossifovlab-sfari-frontpage/sfari-frontpage
   }
@@ -63,6 +64,12 @@ function main() {
 
   local sfari_frontpage_package_image
   sfari_frontpage_package_image=$(e docker_data_img_sfari_frontpage_package)
+
+  build_stage "Draw build dependencies"
+  {
+
+    build_deps_graph_write_image 'build-env/dependency-graph.svg'
+  }
 
   build_stage "Build iossifovlab-http"
   {
