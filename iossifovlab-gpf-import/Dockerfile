@@ -8,7 +8,6 @@ RUN mamba install -y -n gpf \
     -c bioconda \
     -c file:///conda-channel \
     -c iossifovlab \
-    -c defaults \
     gpf_impala_storage \
     hadoop=3.1.2 \
     dask-kubernetes=2023.3.1 \

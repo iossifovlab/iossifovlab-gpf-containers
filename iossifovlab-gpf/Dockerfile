@@ -8,7 +8,6 @@ RUN mamba install -y -n gpf \
     -c bioconda \
     -c file:///conda-channel \
     -c iossifovlab \
-    -c defaults \
     gpf_impala_storage \
     gunicorn=20.1.0 \
     mysqlclient=2.0.3
