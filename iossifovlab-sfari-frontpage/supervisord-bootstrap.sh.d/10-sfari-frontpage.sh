@@ -135,7 +135,7 @@ if [ "$must_patch" == "true" ]; then
 	# replace the base href in index.html
 	#
 
-	sed -i -e 's|<base href="">|<base href="/'"$GPF_FRONTPAGE_INSTANCE_PREFIX"'/">|' /site/frontpage/index.html
+	sed -i -e 's|<base href="/frontpage_prefix/">|<base href="/'"$GPF_FRONTPAGE_INSTANCE_PREFIX"'/">|' /site/frontpage/index.html
 
 fi
 
