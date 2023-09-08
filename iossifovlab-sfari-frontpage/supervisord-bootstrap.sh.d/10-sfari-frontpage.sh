@@ -79,7 +79,7 @@ production_environment_object+=''\
 
 
 production_environment_object+=''\
-'authPath:"'"//$GPF_OAUTH_ENDPOINT/$GPF_OAUTH_PREFIX"'"'\
+'authPath:"'"//$GPF_OAUTH_ENDPOINT/$GPF_OAUTH_PREFIX/"'"'\
 '}'
 
 # done !
