@@ -12,7 +12,7 @@ ExecStart=/opt/conda/envs/gpf/bin/gunicorn \
     --workers=1 \
     --threads=8 \
     --bind=127.0.0.1:9001 \
-    --timeout=300 \
+    --timeout=1200 \
     --access-logfile /logs/access.log \
     --error-logfile /logs/error.log \
     wdae.gunicorn_wsgi:application
