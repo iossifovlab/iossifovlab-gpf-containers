@@ -57,6 +57,8 @@ sed -i '/^<VirtualHost \*:80>$/ a\ \ \ \ Header always set Access-Control-Allow-
     
 fi
 
+sed -i "s/Timeout 300/Timeout 1200/g" /etc/apache2/apache2.conf
+
 a2enmod headers
 
 echo "enabling apache site: localhost..."
