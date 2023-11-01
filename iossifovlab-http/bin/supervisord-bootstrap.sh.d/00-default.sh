@@ -1,7 +1,9 @@
 #!/bin/bash
 
-mkdir -p /site/hg19
-mkdir -p /site/hg38
+a2enmod headers
+a2enmod session
+a2enmod session_cookie
+a2enmod session_crypto
 
 for sitename in ${APACHE2_GPF_SITES}; do
     echo "enabling apache site: ${sitename}..."
