@@ -88,7 +88,6 @@ function main() {
   build_stage "Get conda channel"
   {
     build_docker_image_cp_from "$gpf_conda_packaging_channel" . /conda-channel/
-    tar zcvf ./results/conda-channel.tar.gz ./conda-channel
   }
 
 
@@ -103,7 +102,7 @@ function main() {
     # copy gpf package
     build_run_local mkdir ./iossifovlab-gpf-base/gpf
     build_run_local bash -c 'cd ./iossifovlab-gpf-base/ && 
-        tar zxf ../results/conda-channel.tar.gz'
+        cp -rf ../conda-channel .'
 
     build_docker_image_create \
       "iossifovlab-gpf-base" \
