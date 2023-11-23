@@ -65,6 +65,9 @@ function main() {
   local sfari_frontpage_package_image
   sfari_frontpage_package_image=$(e docker_data_img_sfari_frontpage_package)
 
+  local gpf_conda_packaging_channel
+  gpf_conda_packaging_channel=$(e docker_data_img_gpf_conda_packaging_channel)
+
   build_stage "Draw build dependencies"
   {
 
@@ -82,17 +85,24 @@ function main() {
       "latest"
   }
 
+  build_stage "Get conda channel"
+  {
+    build_docker_image_cp_from "$gpf_conda_packaging_channel" . /conda-channel/
+  }
+
+
   local docker_img_iossifovlab_mamba_base_tag
   docker_img_iossifovlab_mamba_base_tag="$(e docker_img_iossifovlab_mamba_base_tag)"
 
   echo "docker_img_iossifovlab_mamba_base_tag=$docker_img_iossifovlab_mamba_base_tag"
+
 
   build_stage "Build iossifovlab-gpf-base"
   {
     # copy gpf package
     build_run_local mkdir ./iossifovlab-gpf-base/gpf
     build_run_local bash -c 'cd ./iossifovlab-gpf-base/ && 
-        tar zxf ../results/conda-channel.tar.gz'
+        cp -rf ../conda-channel .'
 
     build_docker_image_create \
       "iossifovlab-gpf-base" \

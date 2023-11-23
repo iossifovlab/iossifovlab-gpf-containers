@@ -15,11 +15,6 @@ pipeline {
         zulipSend(
           message: "Started build #${env.BUILD_NUMBER} of project ${env.JOB_NAME} (${env.BUILD_URL})",
           topic: "${env.JOB_NAME}")
-        copyArtifacts(
-          filter: "results/conda-channel.tar.gz",
-          fingerprintArtifacts: true,
-          projectName: "iossifovlab/gpf-conda-packaging/master",
-          selector: lastSuccessful())
       }
     }
     stage('Generate stages') {
