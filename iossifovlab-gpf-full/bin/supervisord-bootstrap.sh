@@ -57,6 +57,7 @@ fi
 
 if [[ ! -z "${APACHE2_VHOST_LISTEN_PORT}" ]]; then
 sed -i "s/<VirtualHost \*:80>/<VirtualHost \*:${APACHE2_VHOST_LISTEN_PORT}>/g" /etc/apache2/sites-available/localhost.conf
+sed -i "s/Listen 80/Listen ${APACHE2_VHOST_LISTEN_PORT}/g" /etc/apache2/ports.conf
 fi
 
 sed -i "s/Timeout 300/Timeout 1200/g" /etc/apache2/apache2.conf
