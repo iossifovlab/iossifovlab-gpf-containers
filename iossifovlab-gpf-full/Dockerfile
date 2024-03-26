@@ -20,14 +20,11 @@ COPY gpfjs /site/gpf
 WORKDIR /site
 
 # configure wdae
-COPY ./wdae/wdae.wsgi /gpf/lib/python3.9/site-packages/wdae/wsgi.py
-COPY ./wdae/gunicorn.wsgi /gpf/lib/python3.9/site-packages/wdae/gunicorn_wsgi.py
-COPY ./wdae/settings.py /gpf/lib/python3.9/site-packages/wdae/settings.py
-COPY ./wdae/gunicorn_settings.py /gpf/lib/python3.9/site-packages/wdae/gunicorn_settings.py
-COPY ./wdae/create_oauth_app.py /gpf/lib/python3.9/site-packages/wdae/create_oauth_app.py
-
-# RUN source /gpf/bin/activate && wdaemanage.py collectstatic --noinput
-
+COPY ./wdae/wdae.wsgi /gpf/lib/python3.10/site-packages/wdae/wsgi.py
+COPY ./wdae/gunicorn.wsgi /gpf/lib/python3.10/site-packages/wdae/gunicorn_wsgi.py
+COPY ./wdae/settings.py /gpf/lib/python3.10/site-packages/wdae/settings.py
+COPY ./wdae/gunicorn_settings.py /gpf/lib/python3.10/site-packages/wdae/gunicorn_settings.py
+COPY ./wdae/create_oauth_app.py /gpf/lib/python3.10/site-packages/wdae/create_oauth_app.py
 
 
 # configure apache2
@@ -53,8 +50,5 @@ COPY ./bin/wait-for-it.sh /
 RUN chmod +x /*.sh
 
 EXPOSE 80 443
-
-# CMD ["/bootstrap.sh"]
-# CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
 ENTRYPOINT ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
