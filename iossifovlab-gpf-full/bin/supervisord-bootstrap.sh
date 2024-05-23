@@ -48,7 +48,7 @@ sed -i "s/gpf_prefix/${GPF_PREFIX}/g" /etc/apache2/sites-available/localhost.con
 fi
 
 if [[ ! -z "${DAE_PHENODB_DIR}" ]]; then
-sed -i "s;/data-phenodb;$DAE_PHENODB_DIR;g" /etc/apache2/sites-available/localhost.conf
+sed -i "s;/data-phenodb/pheno;$DAE_PHENODB_DIR;g" /etc/apache2/sites-available/localhost.conf
 fi
 
 if [ "${DOCKER_COMPOSE_CORS_WORKAROUND}" == "True" ]; then
