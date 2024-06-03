@@ -35,7 +35,7 @@ function main() {
   libmain_init iossifovlab.iossifovlab-gpf-containers igc
   libmain_init_build_env clobber:"$clobber" preset:"$preset" build_no:"$build_no" \
     generate_jenkins_init:"$generate_jenkins_init" expose_ports:"$expose_ports" \
-    iossifovlab.gpf-conda-packaging iossifovlab.sfari-frontpage
+    iossifovlab.gpf-conda-packaging
   libmain_save_build_env_on_exit
   libbuild_init stage:"$stage" registry.seqpipe.org
 
@@ -52,8 +52,7 @@ function main() {
       ./iossifovlab-gpf-base/conda-channel \
       ./iossifovlab-gpf/gpf \
       ./iossifovlab-gpf/conda-channel \
-      ./iossifovlab-gpf-full/gpfjs \
-      ./iossifovlab-sfari-frontpage/sfari-frontpage
+      ./iossifovlab-gpf-full/gpfjs
   }
 
   local gpf_package_image
@@ -61,9 +60,6 @@ function main() {
 
   local gpfjs_package_image
   gpfjs_package_image=$(e docker_data_img_gpfjs_production_package)
-
-  local sfari_frontpage_package_image
-  sfari_frontpage_package_image=$(e docker_data_img_sfari_frontpage_package)
 
   local gpf_conda_packaging_channel
   gpf_conda_packaging_channel=$(e docker_data_img_gpf_conda_packaging_channel)
@@ -151,26 +147,6 @@ function main() {
       ./iossifovlab-gpf-full/Dockerfile "${docker_img_iossifovlab_gpf_tag}"
 
 
-  }
-
-  build_stage "Build sfari-frontpage"
-  {
-    # copy sfari-frontpage package
-    build_run_local mkdir ./iossifovlab-sfari-frontpage/sfari-frontpage
-    build_docker_image_cp_from "$sfari_frontpage_package_image" \
-        ./iossifovlab-sfari-frontpage/ /sfari-frontpage
-
-    local docker_repo
-    docker_repo=$(ee docker_repo)
-
-    local docker_img_iossifovlab_http_tag
-    docker_img_iossifovlab_http_tag=$(e docker_img_iossifovlab_http_tag)
-
-    build_docker_image_create \
-      "iossifovlab-sfari-frontpage" \
-      "iossifovlab-sfari-frontpage" \
-      "iossifovlab-sfari-frontpage/Dockerfile" \
-      "$docker_img_iossifovlab_http_tag"
   }
 
   build_stage "Build gpf fronting proxy"
