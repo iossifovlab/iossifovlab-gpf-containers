@@ -148,9 +148,8 @@ function main() {
 
     build_docker_image_create "iossifovlab-gpf-full" "iossifovlab-gpf-full" \
       ./iossifovlab-gpf-full/Dockerfile \
-      "${docker_img_iossifovlab_gpf_tag}"
-
-
+      "${docker_img_iossifovlab_gpf_tag}" \
+      PYTHON_VERSION="${python_version}"
   }
 
   build_stage "Build gpf fronting proxy"

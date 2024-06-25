@@ -1,6 +1,6 @@
 ARG REGISTRY=""
 ARG BASE_IMAGE_TAG=latest
-ARG PYTHON_VERSION="3.11"
+ARG PYTHON_VERSION="3.10"
 FROM ${REGISTRY}iossifovlab-gpf:${BASE_IMAGE_TAG}
 
 SHELL ["/bin/bash", "-c"]
