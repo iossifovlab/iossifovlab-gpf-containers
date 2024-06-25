@@ -143,8 +143,12 @@ function main() {
     local docker_img_iossifovlab_gpf_tag
     docker_img_iossifovlab_gpf_tag=$(e docker_img_iossifovlab_gpf_tag)
 
+    local python_version
+    python_version=$(e gpf_conda_packaging_python_version)
+
     build_docker_image_create "iossifovlab-gpf-full" "iossifovlab-gpf-full" \
-      ./iossifovlab-gpf-full/Dockerfile "${docker_img_iossifovlab_gpf_tag}"
+      ./iossifovlab-gpf-full/Dockerfile \
+      "${docker_img_iossifovlab_gpf_tag}"
 
 
   }
