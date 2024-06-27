@@ -3,7 +3,6 @@ import os
 from .default_settings import *  # type: ignore  NOSONAR
 
 
-
 STUDIES_EAGER_LOADING = False
 
 

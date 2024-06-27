@@ -2,6 +2,7 @@ ARG REGISTRY=""
 ARG BASE_IMAGE_TAG=latest
 FROM ${REGISTRY}iossifovlab-gpf:${BASE_IMAGE_TAG}
 
+ARG PYTHON_VERSION="3.10"
 
 SHELL ["/bin/bash", "-c"]
 
@@ -20,11 +21,10 @@ COPY gpfjs /site/gpf
 WORKDIR /site
 
 # configure wdae
-COPY ./wdae/wdae.wsgi /gpf/lib/python3.11/site-packages/wdae/wsgi.py
-COPY ./wdae/gunicorn.wsgi /gpf/lib/python3.11/site-packages/wdae/gunicorn_wsgi.py
-COPY ./wdae/settings.py /gpf/lib/python3.11/site-packages/wdae/settings.py
-COPY ./wdae/gunicorn_settings.py /gpf/lib/python3.11/site-packages/wdae/gunicorn_settings.py
-COPY ./wdae/create_oauth_app.py /gpf/lib/python3.11/site-packages/wdae/create_oauth_app.py
+COPY ./wdae/wdae.wsgi /gpf/lib/python${PYTHON_VERSION}/site-packages/wdae/wsgi.py
+COPY ./wdae/gunicorn.wsgi /gpf/lib/python${PYTHON_VERSION}/site-packages/wdae/gunicorn_wsgi.py
+COPY ./wdae/settings.py /gpf/lib/python${PYTHON_VERSION}/site-packages/wdae/settings.py
+COPY ./wdae/gunicorn_settings.py /gpf/lib/python${PYTHON_VERSION}/site-packages/wdae/gunicorn_settings.py
 
 
 # configure apache2
