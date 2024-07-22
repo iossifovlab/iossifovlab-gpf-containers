@@ -36,12 +36,6 @@ echo -e "gpf gunicorn running..."
 echo -e "------------------------------------------------------------------------\n\n"
 
 
-if [[ ! -z "${GOOGLE_ANALYTICS_UA}" ]]; then
-
-sed -i "s/\/\/ gtag/gtag('config', '${GOOGLE_ANALYTICS_UA}');/g" /site/gpf/index.html
-
-fi
-
 if [[ ! -z "${GPF_PREFIX}" ]]; then
 sed -i "s/gpf_prefix/${GPF_PREFIX}/g" /site/gpf/index.html
 sed -i "s/gpf_prefix/${GPF_PREFIX}/g" /etc/apache2/sites-available/localhost.conf
