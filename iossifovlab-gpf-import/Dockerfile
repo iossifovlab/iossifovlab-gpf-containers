@@ -8,10 +8,7 @@ RUN mamba install -y -n gpf \
     -c bioconda \
     -c file:///conda-channel \
     -c iossifovlab \
-    gpf_impala_storage \
-    hadoop=3.1.2 \
-    dask-kubernetes=2023.3.1 \
-    dask-jobqueue=0.8.1
+    gpf_impala_storage
 
 
 SHELL ["/bin/bash", "-c"]
