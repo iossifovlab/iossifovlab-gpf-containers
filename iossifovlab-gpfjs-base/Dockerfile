@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y \
-		supervisor less \
+		supervisor less curl wget \
 		apache2 mysql-client && \
 	DEBIAN_FRONTEND=noninteractive apt-get clean
 
