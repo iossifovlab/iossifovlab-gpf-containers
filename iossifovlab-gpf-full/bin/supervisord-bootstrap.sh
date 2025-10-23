@@ -41,6 +41,10 @@ sed -i "s/gpf_prefix/${GPF_PREFIX}/g" /site/gpf/index.html
 sed -i "s/gpf_prefix/${GPF_PREFIX}/g" /etc/apache2/sites-available/localhost.conf
 fi
 
+if [[ -f /google-analytics/tag.txt ]]; then
+sed -i '/<head>/r /google-analytics/tag.txt' /site/gpf/index.html 
+fi
+
 if [[ ! -z "${DAE_PHENODB_DIR}" ]]; then
 sed -i "s;/data-phenodb/pheno;$DAE_PHENODB_DIR;g" /etc/apache2/sites-available/localhost.conf
 fi
@@ -53,6 +57,7 @@ if [[ ! -z "${APACHE2_VHOST_LISTEN_PORT}" ]]; then
 sed -i "s/<VirtualHost \*:80>/<VirtualHost \*:${APACHE2_VHOST_LISTEN_PORT}>/g" /etc/apache2/sites-available/localhost.conf
 sed -i "s/Listen 80/Listen ${APACHE2_VHOST_LISTEN_PORT}/g" /etc/apache2/ports.conf
 fi
+
 
 sed -i "s/Timeout 300/Timeout 1200/g" /etc/apache2/apache2.conf
 
