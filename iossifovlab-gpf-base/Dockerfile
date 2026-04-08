@@ -13,4 +13,4 @@ RUN mamba install -y -n gpf \
     -c bioconda \
     -c file:///conda-channel \
     -c iossifovlab \
-    gpf_dae gpf_wdae gpf_rest_client gpf_federation
+    gain_core gpf_core gpf_web gpf_rest_client gpf_federation

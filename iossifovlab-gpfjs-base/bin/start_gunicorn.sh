@@ -9,4 +9,4 @@
     --timeout=1200 \
     --access-logfile /logs/access.log \
     --error-logfile /logs/error.log \
-    wdae.gunicorn_wsgi:application
+    gpf_web.gunicorn_wsgi:application

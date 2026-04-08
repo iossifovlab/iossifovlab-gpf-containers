@@ -18,11 +18,11 @@ COPY --from=build /gpf /gpf
 
 ARG PYTHON_VERSION="3.12"
 
-# configure wdae
-COPY ./wdae/wdae.wsgi /gpf/lib/python${PYTHON_VERSION}/site-packages/wdae/wsgi.py
-COPY ./wdae/gunicorn.wsgi /gpf/lib/python${PYTHON_VERSION}/site-packages/wdae/gunicorn_wsgi.py
-COPY ./wdae/settings.py /gpf/lib/python${PYTHON_VERSION}/site-packages/wdae/settings.py
-COPY ./wdae/gunicorn_settings.py /gpf/lib/python${PYTHON_VERSION}/site-packages/wdae/gunicorn_settings.py
+# configure gpf_web
+COPY ./gpf_web/wdae.wsgi /gpf/lib/python${PYTHON_VERSION}/site-packages/gpf_web/wsgi.py
+COPY ./gpf_web/gunicorn.wsgi /gpf/lib/python${PYTHON_VERSION}/site-packages/gpf_web/gunicorn_wsgi.py
+COPY ./gpf_web/settings.py /gpf/lib/python${PYTHON_VERSION}/site-packages/gpf_web/settings.py
+COPY ./gpf_web/gunicorn_settings.py /gpf/lib/python${PYTHON_VERSION}/site-packages/gpf_web/gunicorn_settings.py
 
 # When image is run, run the code with the environment
 # activated:
